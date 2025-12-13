@@ -1,0 +1,677 @@
+<header class="header" [class.scrolled]="true">
+  <div class="container header-content">
+    <a class="logo" (click)="scrollToSection('home')">
+      <span class="logo-text">Poppik</span>
+      <span class="logo-accent">Academy</span>
+    </a>
+
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav" [class.active]="isMenuOpen">
+      <a (click)="scrollToSection('home')">Home</a>
+      <a (click)="scrollToSection('about')">About</a>
+      <a (click)="scrollToSection('courses')">Courses</a>
+      <a (click)="scrollToSection('highlights')">Highlights</a>
+      <a (click)="scrollToSection('careers')">Careers</a>
+      <a (click)="scrollToSection('blog')">Blog</a>
+      <a (click)="scrollToSection('contact')" class="nav-cta">Contact Us</a>
+    </nav>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div class="hero-slider">
+    @for (slide of slides; track slide.id || slide.title; let i = $index) {
+      <div class="hero-slide" [class.active]="currentSlide === i">
+        <img [src]="slide.image" alt="Slider Image" class="hero-slide-img">
+      </div>
+    }
+  </div>
+  <div class="hero-dots">
+    @for (slide of slides; track slide.id || slide.title; let i = $index) {
+      <button class="dot" [class.active]="currentSlide === i" (click)="goToSlide(i)" [attr.aria-label]="'Go to slide ' + (i + 1)"></button>
+    }
+  </div>
+</section>
+
+<section id="about" class="section about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-content">
+        <span class="section-subtitle">About Us</span>
+        <h2 class="section-title">Empowering Dreams in Beauty, Lifestyle & Wellness</h2>
+        <p class="about-text">
+          Poppik Academy is a modern, skill-focused training institution dedicated to the Beauty, Lifestyle, and Wellness industries. Our mission is to empower students, professionals, and aspiring entrepreneurs with high-quality, industry-ready learning that helps them grow with confidence and build a successful career.
+        </p>
+        <p class="about-text">
+          Backed by the values, expertise, and vision of our parent company Poppik Lifestyle Pvt. Ltd., Poppik Academy brings a new-age learning experience designed for today's generation.
+        </p>
+        <div class="about-philosophy">
+          <span class="philosophy-tag">Educate</span>
+          <span class="philosophy-arrow">→</span>
+          <span class="philosophy-tag">Empower</span>
+          <span class="philosophy-arrow">→</span>
+          <span class="philosophy-tag">Elevate</span>
+        </div>
+      </div>
+      <div class="about-features">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Our Mission</h3>
+          <p>To deliver high-quality, practical and industry-focused education across Beauty, Lifestyle and Wellness, empowering learners to gain real skills and create meaningful career opportunities.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌟</div>
+          <h3>Our Vision</h3>
+          <p>To become India's most trusted and innovative academy in the Beauty, Lifestyle and Wellness sectors — a place where passion meets excellence.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-choose">
+      <h3 class="why-title">Why Choose Poppik Academy?</h3>
+      <div class="why-grid">
+        <div class="why-item">
+          <span class="why-icon">👨‍🏫</span>
+          <h4>Industry Expert Faculty</h4>
+          <p>Learn from experienced professionals and real-world specialists.</p>
+        </div>
+        <div class="why-item">
+          <span class="why-icon">🛠️</span>
+          <h4>Hands-on Training</h4>
+          <p>Not just theory—training that builds real skills you can use immediately.</p>
+        </div>
+        <div class="why-item">
+          <span class="why-icon">📚</span>
+          <h4>Updated Curriculum</h4>
+          <p>Based on the latest trends, techniques, and innovations.</p>
+        </div>
+        <div class="why-item">
+          <span class="why-icon">💼</span>
+          <h4>Career Guidance</h4>
+          <p>Designed to make you job-ready and business-ready.</p>
+        </div>
+        <div class="why-item">
+          <span class="why-icon">🌱</span>
+          <h4>Holistic Development</h4>
+          <p>Focus on communication, grooming, branding, and professional ethics.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="courses" class="section courses">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">Our Programs</span>
+      <h2 class="section-title">Courses Designed for Your Success</h2>
+      <p class="section-description">At Poppik Academy, every course is designed to give you hands-on skills, deep industry knowledge, and a strong professional foundation. Whether you want to start a career, upgrade your skills, or build your own business—our programs help you grow with confidence.</p>
+    </div>
+
+    <div class="courses-scroll-wrapper">
+      <div class="courses-scroll">
+        @for (course of courses; track course.title) {
+          <div class="course-card">
+            <div class="course-icon">{{ course.icon }}</div>
+            <span class="course-category">{{ course.category }}</span>
+            <h3 class="course-title">{{ course.title }}</h3>
+            <div class="course-meta">
+              <span><i>⏱</i> {{ course.duration }}</span>
+              <span><i>📊</i> {{ course.level }}</span>
+            </div>
+              <button class="btn btn-secondary course-btn" (click)="openCourse(course)">{{ course.buttonText || 'Learn More' }}</button>
+          </div>
+        }
+      </div>
+    </div>
+
+      <!-- Course details modal -->
+      <div class="course-modal" *ngIf="selectedCourse">
+        <div class="modal-backdrop" (click)="closeCourse()"></div>
+        <div class="modal-box">
+          <button class="modal-close" (click)="closeCourse()">×</button>
+          <div class="modal-body">
+            <div class="modal-header">
+              <h2>{{ selectedCourse.title }}</h2>
+              <span class="modal-category">{{ selectedCourse.category }}</span>
+            </div>
+            <div class="modal-meta">
+              <span><i>⏱</i> {{ selectedCourse.duration }}</span>
+              <span><i>📊</i> {{ selectedCourse.level }}</span>
+            </div>
+            <p class="modal-description">{{ selectedCourse.description || selectedCourse.excerpt || 'Course details coming soon.' }}</p>
+            <div class="modal-actions">
+              <button class="btn btn-secondary" (click)="closeCourse()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="courses-features">
+      <h3 class="features-title">What You Can Expect</h3>
+      <div class="features-list">
+        <div class="course-feature">
+          <span>•</span> Beginner to advanced level training
+        </div>
+        <div class="course-feature">
+          <span>•</span> Practical sessions with real-world learning
+        </div>
+        <div class="course-feature">
+          <span>•</span> Industry-standard tools, techniques, and methods
+        </div>
+        <div class="course-feature">
+          <span>•</span> Updated curriculum based on latest trends
+        </div>
+        <div class="course-feature">
+          <span>•</span> Certification on successful completion
+        </div>
+      </div>
+      <p class="features-tagline">From beauty artistry to lifestyle enhancement and holistic wellness, our courses unlock your full potential.</p>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="section gallery">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">Gallery</span>
+      <h2 class="section-title">See Our Academy in Action</h2>
+      <p class="section-description">Explore moments from our training sessions, workshops, and student transformations.</p>
+    </div>
+
+    <div class="gallery-grid">
+      @for (image of galleryImages; track image; let i = $index) {
+        <div class="gallery-item" [class.wide]="i === 0 || i === 5" (click)="openGalleryImage(image)" role="button" tabindex="0">
+          <img [src]="image" alt="Gallery image">
+          <div class="gallery-overlay">
+            <span class="gallery-zoom">+</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Image Modal -->
+<div class="gallery-modal" *ngIf="gallerySelectedImage">
+  <div class="gallery-modal-backdrop" (click)="closeGalleryModal()"></div>
+  <div class="gallery-modal-box">
+    <button class="gallery-modal-close" (click)="closeGalleryModal()" aria-label="Close image">✕</button>
+    <div class="gallery-modal-content">
+      <div class="gallery-modal-image-wrap">
+        <img [src]="gallerySelectedImage" alt="Gallery" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="highlights" class="section highlights">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">Why We Stand Out</span>
+      <h2 class="section-title">The Poppik Academy Advantage</h2>
+      <p class="section-description">Experience world-class training that sets you apart in the industry.</p>
+    </div>
+
+    <div class="highlights-grid">
+      @for (highlight of highlights; track highlight.title) {
+        <div class="highlight-card">
+          <div class="highlight-icon">{{ highlight.icon }}</div>
+          <h3>{{ highlight.title }}</h3>
+          <p>{{ highlight.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section id="placement" class="section placement">
+  <div class="container">
+    <div class="placement-content">
+      <div class="placement-text">
+        <span class="section-subtitle">Job Placement</span>
+        <h2 class="section-title">Your Success Begins Here</h2>
+        <p>At Poppik Academy, your success doesn't end with completing a course — it truly begins there. Our dedicated Job Placement Support ensures that every learner gets the right opportunity to start or upgrade their career.</p>
+
+        <div class="placement-features">
+          @for (support of careerSupport; track support.title) {
+            <div class="placement-item">
+              <span class="placement-icon">{{ support.icon }}</span>
+              <div>
+                <h4>{{ support.title }}</h4>
+                <p>{{ support.description }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <section class="partners">
+      <div class="container">
+        <h2>Our Industry Partners</h2>
+        <div class="partners-scroll-wrapper">
+          <div class="partners-scroll">
+            @for (partner of partners; track partner.id) {
+              <div class="partner-logo">
+                @if (partner.logo) {
+                  <img [src]="partner.logo" [alt]="partner.name" [title]="partner.name">
+                } @else {
+                  <span>{{ partner.name }}</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<section id="careers" class="section careers">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">Career Support</span>
+      <h2 class="section-title">Build Your Future with Confidence</h2>
+      <p class="section-description">At Poppik Academy, we believe that the right skills can open doors to endless opportunities. Our Career Support system is designed to guide every learner toward a successful future in the Beauty, Lifestyle, and Wellness industries.</p>
+    </div>
+
+    <div class="career-intro">
+      <p>Whether you want a stable job, start freelancing, build your own brand, or become an entrepreneur — we help you find the right path.</p>
+    </div>
+
+    <div class="career-paths-section">
+      <h3 class="career-paths-title">Career Paths You Can Choose</h3>
+
+      <div class="careers-grid">
+        <div class="career-category">
+          <div class="career-icon">💄</div>
+          <h3>Beauty Industry Careers</h3>
+          <ul>
+            @for (career of careers.beauty; track career) {
+              <li>{{ career }}</li>
+            }
+          </ul>
+        </div>
+        <div class="career-category">
+          <div class="career-icon">✨</div>
+          <h3>Lifestyle Careers</h3>
+          <ul>
+            @for (career of careers.lifestyle; track career) {
+              <li>{{ career }}</li>
+            }
+          </ul>
+        </div>
+        <div class="career-category">
+          <div class="career-icon">🌿</div>
+          <h3>Wellness Careers</h3>
+          <ul>
+            @for (career of careers.wellness; track career) {
+              <li>{{ career }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="career-support-section">
+      <h3>How Poppik Academy Supports Your Career</h3>
+      <div class="career-support-grid">
+        @for (support of careerSupport; track support.title) {
+          <div class="career-support-item">
+            <span class="support-icon">{{ support.icon }}</span>
+            <div>
+              <h4>{{ support.title }}</h4>
+              <p>{{ support.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="career-footer">
+      <h3>Your Career, Your Growth</h3>
+      <p>No matter where you start, Poppik Academy is committed to helping you build a skilled, confident, and successful career in the Beauty, Lifestyle & Wellness world.</p>
+      <div class="career-cta">
+        <p class="cta-tagline">Grow with the right skills. Work with the right opportunities. Shine with the right guidance.</p>
+        <button class="btn btn-primary" (click)="scrollToSection('contact')">Start Your Journey</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blog" class="section blog">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">Insights & Articles</span>
+      <h2 class="section-title">Learn. Upgrade. Transform.</h2>
+      <p class="section-description">Welcome to the official Poppik Academy Blog, your trusted space to explore the world of Beauty, Lifestyle, and Wellness.</p>
+    </div>
+
+    <div class="blog-intro">
+      <p>Here, learning never stops — and inspiration is just one scroll away.</p>
+      <p>Our experts bring you practical tips, industry insights, step-by-step guides, career advice, product knowledge, trends, and everything you need to grow personally and professionally.</p>
+      <p>Whether you're a student, beauty enthusiast, lifestyle creator, wellness explorer, or someone building a career — these blogs are designed to help you <strong>learn smarter, work better, and rise faster.</strong></p>
+    </div>
+
+    <div class="blog-grid">
+      @for (post of blogs; track post.title) {
+        <div class="blog-card">
+          <div class="blog-image">
+            <img [src]="post.image" [alt]="post.title">
+            <span class="blog-category">{{ post.category }}</span>
+          </div>
+          <div class="blog-content">
+            <span class="blog-date">{{ post.date }}</span>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.excerpt }}</p>
+            <a [routerLink]="['/blog', post.id]" class="blog-link">Read More →</a>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="blog-categories-section">
+      <h3 class="categories-title">What You'll Find Here</h3>
+
+      <div class="blog-categories">
+        <div class="blog-cat">
+          <span class="cat-icon">💄</span>
+          <h4>Beauty</h4>
+          <ul class="category-list">
+            <li>Makeup techniques & tutorials</li>
+            <li>Skin & hair care routines</li>
+            <li>Product reviews & recommendations</li>
+            <li>Latest trends & professional tips</li>
+            <li>Career opportunities in the beauty industry</li>
+          </ul>
+        </div>
+        <div class="blog-cat">
+          <span class="cat-icon">✨</span>
+          <h4>Lifestyle</h4>
+          <ul class="category-list">
+            <li>Personal grooming & styling</li>
+            <li>Confidence, communication & self-growth</li>
+            <li>Daily habits for a better lifestyle</li>
+            <li>Productivity & personality development</li>
+            <li>Fashion, styling and social presence tips</li>
+          </ul>
+        </div>
+        <div class="blog-cat">
+          <span class="cat-icon">🌿</span>
+          <h4>Wellness</h4>
+          <ul class="category-list">
+            <li>Mental & emotional wellbeing</li>
+            <li>Fitness, nutrition & healthy living</li>
+            <li>Mindfulness, balance & stress care</li>
+            <li>Self-care routines</li>
+            <li>Holistic health practices</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-benefits">
+      <h3>Why Read Poppik Academy Blogs?</h3>
+      <div class="benefits-grid">
+        <div class="benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Easy-to-understand, beginner-friendly content</p>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Industry-approved knowledge</p>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Real-life techniques you can apply immediately</p>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Experts explaining complex topics in a simple way</p>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Regular updates to keep you ahead of trends</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-footer">
+      <h3>Learn. Discover. Elevate.</h3>
+      <p>Every blog is designed to improve your skills, mindset, and personal growth journey.</p>
+      <p class="blog-tagline">Your transformation starts here — one article at a time.</p>
+    </div>
+  </div>
+</section>
+
+<section id="videos" class="section videos">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">Video Hub</span>
+      <h2 class="section-title">Learn Anytime, Grow Every Day</h2>
+      <p class="section-description">Welcome to the Poppik Academy Video Hub, your go-to destination for quick learning, expert demos, tutorials, and powerful knowledge — all in one place.</p>
+    </div>
+
+    <div class="video-intro">
+      <p>Our videos are designed to help you understand, practice, and master the essential skills that matter in the Beauty, Lifestyle, and Wellness industry.</p>
+      <p class="video-tagline">Short, simple, practical — perfect for learners who want to grow fast.</p>
+    </div>
+
+    <div class="videos-grid">
+      @for (video of videos; track video.title) {
+        <div class="video-card" (click)="openVideoModal(video)" role="button" tabindex="0">
+          <div class="video-thumbnail">
+            <img [src]="video.thumbnail" [alt]="video.title">
+            <div class="video-play">
+              <span>▶</span>
+            </div>
+            <span class="video-duration">{{ video.duration }}</span>
+          </div>
+          <div class="video-info">
+            <span class="video-category">{{ video.category }}</span>
+            <h3>{{ video.title }}</h3>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Inline Video Modal (improved UI) -->
+    <div class="video-modal-overlay" *ngIf="selectedVideoForModal">
+      <div class="video-modal-backdrop" (click)="closeVideoModal()"></div>
+      <div class="video-modal-dialog">
+        <div class="video-modal-header">
+          <div class="video-modal-title">{{ selectedVideoForModal.title || 'Video' }}</div>
+          <button class="video-modal-close" (click)="closeVideoModal()">✕</button>
+        </div>
+        <div class="video-modal-content">
+          <div class="video-player-wrap">
+            <iframe *ngIf="isYouTubeModal" [src]="youtubeEmbedUrlModal | safe" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+            <video *ngIf="!isYouTubeModal && selectedVideoForModal.video_url" controls autoplay muted playsinline preload="metadata">
+              <source [src]="selectedVideoForModal.video_url" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="video-modal-body">
+            <p class="video-desc">{{ selectedVideoForModal.description || selectedVideoForModal.excerpt || '' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-categories-section">
+      <h3 class="video-categories-title">What You'll Learn Through Videos</h3>
+
+      <div class="video-categories">
+        <div class="video-cat">
+          <span class="cat-icon">💄</span>
+          <h4>Beauty Tutorials</h4>
+          <ul class="video-category-list">
+            <li>Step-by-step makeup demonstrations</li>
+            <li>Skin & hair care techniques</li>
+            <li>Professional beauty hacks</li>
+            <li>Product usage guides</li>
+            <li>Trend-based looks and styles</li>
+          </ul>
+        </div>
+        <div class="video-cat">
+          <span class="cat-icon">✨</span>
+          <h4>Lifestyle Videos</h4>
+          <ul class="video-category-list">
+            <li>Grooming & styling tips</li>
+            <li>Professional communication & confidence building</li>
+            <li>Personal branding & social presence</li>
+            <li>Daily routine upgrades</li>
+            <li>Fashion styling & personality development</li>
+          </ul>
+        </div>
+        <div class="video-cat">
+          <span class="cat-icon">🌿</span>
+          <h4>Wellness Sessions</h4>
+          <ul class="video-category-list">
+            <li>Guided relaxation & mindfulness routines</li>
+            <li>Fitness basics & healthy habit building</li>
+            <li>Emotional wellbeing tips</li>
+            <li>Stress-free lifestyle methods</li>
+            <li>Holistic health practices</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-benefits-section">
+      <h3>Why Watch Poppik Academy Videos?</h3>
+      <div class="video-benefits-grid">
+        <div class="video-benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Easy-to-follow, beginner-friendly format</p>
+        </div>
+        <div class="video-benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Real trainers, real techniques, real results</p>
+        </div>
+        <div class="video-benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Visual learning that improves skills quickly</p>
+        </div>
+        <div class="video-benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Short videos for busy learners</p>
+        </div>
+        <div class="video-benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>Advanced tutorials for professionals</p>
+        </div>
+        <div class="video-benefit-item">
+          <span class="benefit-icon">✓</span>
+          <p>New videos added regularly</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-footer">
+      <h3>Watch. Practice. Grow.</h3>
+      <p>Every video is thoughtfully designed to help you become better, more skilled, and more confident in your journey.</p>
+      <p class="video-cta-text">Start watching now — and take your Beauty, Lifestyle & Wellness skills to the next level.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="contact" class="section contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="section-subtitle">Get in Touch</span>
+        <h2 class="section-title">Contact Us</h2>
+        <p>We're here to help you on your Beauty, Lifestyle & Wellness journey. Whether you have questions about courses, admissions, or career guidance — reach out to us anytime.</p>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <h4>Address</h4>
+              <p>Poppik Academy, Mumbai, India</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div>
+              <h4>Phone</h4>
+              <p>+91-7039011291</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <div>
+              <h4>Email</h4>
+              <p>hanmnt&#64;poppik.in</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">🕐</span>
+            <div>
+              <h4>Working Hours</h4>
+              <p>Mon - Sat: 9:00 AM - 6:00 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrapper">
+        <form class="contact-form" (ngSubmit)="submitContact()">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" [(ngModel)]="contactForm.name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" [(ngModel)]="contactForm.email" name="email" placeholder="your&#64;email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" [(ngModel)]="contactForm.phone" name="phone" placeholder="+91 XXXXX XXXXX">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea [(ngModel)]="contactForm.message" name="message" placeholder="How can we help you?" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-header">
+      <h2>Poppik Academy - Policies & Terms</h2>
+    </div>
+
+
+
+    <div class="footer-quick-links">
+      <div class="quick-links-grid">
+        <a [routerLink]="['/policies']" fragment="disclaimer">⚠️ Disclaimer</a>
+        <a [routerLink]="['/policies']" fragment="terms-of-use">📋 Terms of Use</a>
+        <a [routerLink]="['/policies']" fragment="privacy">🔒 Privacy Policy</a>
+        <a [routerLink]="['/policies']" fragment="profanity">🚫 Profanity Policy</a>
+        <a [routerLink]="['/policies']" fragment="refund">💰 Refund & Cancellation Policy</a>
+        <a [routerLink]="['/policies']" fragment="terms-conditions">📜 Terms & Conditions</a>
+        <a [routerLink]="['/policies']" fragment="grievance">📞 Grievance Redressal</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-tagline">Poppik Academy – Committed to Transparent, Safe,</p>
+      <p class="footer-copyright">&copy; 2025 Poppik Academy. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>

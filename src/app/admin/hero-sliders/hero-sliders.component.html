@@ -1,0 +1,56 @@
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Hero Sliders</h1>
+    <button class="btn-add" (click)="openCreate()">
+      <span class="material-icons">add</span>
+      Add Slider
+    </button>
+  </header>
+
+  <div class="content-card">
+    <div *ngIf="sliders.length === 0" class="empty-state">
+      <span class="material-icons">view_carousel</span>
+      <p>No hero sliders yet</p>
+      <button class="btn-add" (click)="openCreate()">Add Your First Slider</button>
+    </div>
+
+    <div *ngIf="sliders.length > 0" class="sliders-grid">
+      <div *ngFor="let slider of sliders; trackBy: trackById" class="slider-card">
+        <img [src]="slider.image" [alt]="slider.title">
+        <div class="slider-info">
+          <h3>{{ slider.title }}</h3>
+          <p>{{ slider.subtitle }}</p>
+        </div>
+        <div class="slider-actions">
+          <button class="action-btn edit" (click)="openEdit(slider)"><span class="material-icons">edit</span></button>
+          <button class="action-btn delete" (click)="confirmDelete(slider)"><span class="material-icons">delete</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal form overlay -->
+    <div *ngIf="formVisible" class="modal-overlay" (click)="cancelForm()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <button class="modal-close" (click)="cancelForm()" aria-label="Close">&times;</button>
+        <h3>{{ isEditing ? 'Edit Slider' : 'Add Slider' }}</h3>
+        <div class="form-group">
+          <label>Title</label>
+          <input [(ngModel)]="form.title" />
+        </div>
+        <div class="form-group">
+          <label>Subtitle</label>
+          <input [(ngModel)]="form.subtitle" />
+        </div>
+        <div class="form-group">
+          <label>Image</label>
+          <input type="file" (change)="onFileChange($event)" />
+          <div *ngIf="form.image" class="preview"><img [src]="form.image" alt="preview" /></div>
+        </div>
+        <div class="form-row">
+          <button class="btn-add" (click)="save()">{{ isEditing ? 'Update' : 'Create' }}</button>
+          <button class="btn-add btn-secondary" (click)="cancelForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

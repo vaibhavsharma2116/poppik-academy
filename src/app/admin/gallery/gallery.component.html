@@ -1,0 +1,84 @@
+
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Gallery</h1>
+    <button class="btn-add" (click)="openAddModal()">
+      <span class="material-icons">add_photo_alternate</span>
+      Upload Image
+    </button>
+  </header>
+
+  <div class="content-card">
+    <div *ngIf="images.length === 0" class="empty-state">
+      <span class="material-icons">photo_library</span>
+      <p>No images in gallery yet</p>
+      <button class="btn-add" (click)="openAddModal()">Upload Your First Image</button>
+    </div>
+
+    <div *ngIf="images.length > 0" class="gallery-grid">
+      <div *ngFor="let image of images" class="gallery-item">
+        <img [src]="resolveImage(image.image)" [alt]="image.title" (error)="$any($event.target).src='assets/placeholder.png'">
+        <div class="image-overlay">
+          <div class="image-info">
+            <h4>{{ image.title }}</h4>
+            <span class="category-badge">{{ image.category }}</span>
+          </div>
+          <div class="image-actions">
+            <button class="action-btn edit" (click)="openEditModal(image)">
+              <span class="material-icons">edit</span>
+            </button>
+            <button class="action-btn delete" (click)="deleteImage(image.id)">
+              <span class="material-icons">delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="showModal">
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ isEditMode ? 'Edit Image' : 'Add Image' }}</h2>
+        <button class="modal-close" (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label>Upload Image</label>
+          <input type="file" (change)="onFileSelected($event)" />
+          <div *ngIf="selectedFile" class="small muted">Selected: {{ selectedFile.name }}</div>
+          <div *ngIf="!selectedFile && currentImage.image" class="small muted">Current: {{ currentImage.image }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <select [(ngModel)]="currentImage.category" class="input-lg">
+              <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+              <option *ngIf="categories.indexOf('General')===-1" value="General">General</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Sort Order</label>
+            <input type="number" [(ngModel)]="currentImage.sort_order">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select [(ngModel)]="currentImage.status">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveImage()">
+          {{ isEditMode ? 'Update' : 'Add' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>

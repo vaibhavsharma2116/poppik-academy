@@ -1,0 +1,102 @@
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Courses</h1>
+    <button class="btn-add" (click)="openCreate()">
+      <span class="material-icons">add</span>
+      Add Course
+    </button>
+  </header>
+
+  <div class="content-card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Course Name</th>
+          <th>Students</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses; trackBy: trackById">
+          <td>{{ course.id }}</td>
+          <td>{{ course.name }}</td>
+          <td>{{ course.students }}</td>
+          <td>
+            <span class="status-badge active">{{ course.status }}</span>
+          </td>
+          <td class="actions">
+            <button class="action-btn edit" (click)="openEdit(course)"><span class="material-icons">edit</span></button>
+            <button class="action-btn delete" (click)="confirmDelete(course)"><span class="material-icons">delete</span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal for add/edit course -->
+  <div *ngIf="formVisible" class="modal-overlay" (click)="cancelForm()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="cancelForm()">&times;</button>
+      <div class="form-card">
+        <div class="form-header">
+          <h3>{{ isEditing ? 'Edit Course' : 'Add Course' }}</h3>
+        </div>
+
+        <div class="form-body">
+          <div class="form-row-grid">
+            <div class="form-field">
+              <label>Course Name</label>
+              <input class="input-lg" placeholder="e.g. Professional Makeup Artistry" [(ngModel)]="form.name" />
+            </div>
+
+            <div>
+              <div class="form-field">
+                <label>Duration</label>
+                <input class="input-lg" placeholder="e.g. 3 Months" [(ngModel)]="form.duration" />
+              </div>
+
+              <div class="form-field">
+                <label>Category</label>
+                <select class="input-lg" [(ngModel)]="form.category">
+                  <option>Beauty</option>
+                  <option>Hair</option>
+                  <option>Skin</option>
+                  <option>Lifestyle</option>
+                  <option>Wellness</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Status</label>
+            <select class="input-lg" [(ngModel)]="form.status">
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label>Description</label>
+            <textarea class="textarea-lg" placeholder="Brief description about the course" [(ngModel)]="form.description"></textarea>
+          </div>
+
+          <div class="form-field">
+            <label>Image</label>
+            <input type="file" (change)="onFileChange($event)" accept="image/*" />
+            <div *ngIf="form.image" class="preview">
+              <img [src]="form.image" alt="preview" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <button class="btn-add btn-pill" (click)="save()">{{ isEditing ? 'Update' : 'Create' }}</button>
+          <button class="btn-add btn-secondary btn-pill" (click)="cancelForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+.admin-page {
+  padding: 30px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #D4A574;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-add:hover {
+  background: #c08b5c;
+}
+
+.content-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 15px;
+  font-size: 14px;
+}
+
+.data-table th {
+  color: #666;
+  font-weight: 600;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.data-table td {
+  color: #333;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.data-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.issued {
+  background: #e8f5e9;
+  color: #4caf50;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.action-btn .material-icons {
+  font-size: 18px;
+}
+
+.action-btn.view {
+  background: #e3f2fd;
+  color: #2196f3;
+}
+
+.action-btn.view:hover {
+  background: #2196f3;
+  color: #fff;
+}
+
+.action-btn.download {
+  background: #e8f5e9;
+  color: #4caf50;
+}
+
+.action-btn.download:hover {
+  background: #4caf50;
+  color: #fff;
+}
+
+/* Modal styles (same pattern used across admin modals) */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:1000; padding:20px; }
+.modal { background:#fff; border-radius:12px; max-width:760px; width:100%; box-shadow:0 10px 40px rgba(0,0,0,0.2); padding:24px; position:relative; }
+.modal-close { position:absolute; top:12px; right:12px; background:#fff; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.08); border:1px solid #f0f0f0; font-size:18px; color:#666; }
+.modal-close:hover { background:#fafafa; color:#333; }
+.form-card { background:#fff; border-radius:14px; padding:22px; box-shadow:0 6px 24px rgba(0,0,0,0.08); border:1px solid rgba(212,165,116,0.06); }
+.form-header h3 { margin:0 0 8px; font-size:22px; font-weight:700; }
+.form-body { padding-top:6px; }
+.form-field { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+.form-field label { font-size:14px; font-weight:700; color:#333; }
+.input-lg { height:48px; padding:10px 14px; border-radius:10px; border:1px solid #f0eae2; background:#fbfaf9; font-size:14px; }
+.input-lg:focus { outline:none; border-color:#d4a574; box-shadow:0 0 0 6px rgba(212,165,116,0.06); background:#fff; }
+.form-footer { display:flex; gap:14px; margin-top:12px; }
+.btn-pill { border-radius:12px; padding:12px 28px; font-size:15px; }
+
+@media (max-width:600px) { .modal { padding:18px; } .btn-add { padding:10px 14px; font-size:14px; } }

@@ -1,0 +1,441 @@
+
+> my-angular-project@0.0.0 start
+> ng serve --host 0.0.0.0 --port 5000 --disable-host-check
+
+Warning: Running a server with --disable-host-check is a security risk. See https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a for more information.
+Application bundle generation failed. [7.196 seconds]
+✘ [ERROR] TS2300: Duplicate identifier 'certificateId'. [plugin angular-compiler]
+
+    src/app/app.component.ts:108:2:
+      108 │   certificateId = '';
+          ╵   ~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2300: Duplicate identifier 'verificationResult'. [plugin angular-compiler]
+
+    src/app/app.component.ts:109:2:
+      109 │   verificationResult: any = null;
+          ╵   ~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2300: Duplicate identifier 'contactForm'. [plugin angular-compiler]
+
+    src/app/app.component.ts:111:2:
+      111 │   contactForm = {
+          ╵   ~~~~~~~~~~~
+
+
+✘ [ERROR] TS1434: Unexpected keyword or identifier. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:1:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵  ~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'ss'. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:1:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵  ~~
+
+
+✘ [ERROR] TS1434: Unexpected keyword or identifier. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:4:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵     ~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'Guide'. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:4:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵     ~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:13:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵              ~~~~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'Nutrition'. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:13:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵              ~~~~~~~~~
+
+
+✘ [ERROR] TS1434: Unexpected keyword or identifier. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:23:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵                        ~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'Mentor'. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:23:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵                        ~~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:33:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵                                  ~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'Spa'. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:33:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵                                  ~~~
+
+
+✘ [ERROR] TS1434: Unexpected keyword or identifier. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:37:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵                                      ~~~~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'Associate'. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:37:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵                                      ~~~~~~~~~
+
+
+✘ [ERROR] TS1002: Unterminated string literal. [plugin angular-compiler]
+
+    src/app/app.component.ts:169:48:
+      169 │ }ss Guide', 'Nutrition Mentor', 'Spa Associate']
+          ╵                                                 ^
+
+
+✘ [ERROR] TS1128: Declaration or statement expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:170:2:
+      170 │   };
+          ╵   ^
+
+
+✘ [ERROR] TS2304: Cannot find name 'careerSupport'. [plugin angular-compiler]
+
+    src/app/app.component.ts:172:2:
+      172 │   careerSupport = [
+          ╵   ~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'blogs'. [plugin angular-compiler]
+
+    src/app/app.component.ts:181:2:
+      181 │   blogs = [
+          ╵   ~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'videos'. [plugin angular-compiler]
+
+    src/app/app.component.ts:187:2:
+      187 │   videos = [
+          ╵   ~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'partners'. [plugin angular-compiler]
+
+    src/app/app.component.ts:193:2:
+      193 │   partners = [
+          ╵   ~~~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'galleryImages'. [plugin angular-compiler]
+
+    src/app/app.component.ts:197:2:
+      197 │   galleryImages = [
+          ╵   ~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'constructor'. [plugin angular-compiler]
+
+    src/app/app.component.ts:206:2:
+      206 │   constructor() {
+          ╵   ~~~~~~~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:206:16:
+      206 │   constructor() {
+          ╵                 ^
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:207:4:
+      207 │     this.startSlideshow();
+          ╵     ~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'startSlideshow'. [plugin angular-compiler]
+
+    src/app/app.component.ts:210:2:
+      210 │   startSlideshow() {
+          ╵   ~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:210:19:
+      210 │   startSlideshow() {
+          ╵                    ^
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:212:6:
+      212 │       this.currentSlide = (this.currentSlide + 1) % this.slides.l...
+          ╵       ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:212:27:
+      212 │       this.currentSlide = (this.currentSlide + 1) % this.slides.l...
+          ╵                            ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:212:52:
+      212 │ ...this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+          ╵                                                  ~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'goToSlide'. [plugin angular-compiler]
+
+    src/app/app.component.ts:216:2:
+      216 │   goToSlide(index: number) {
+          ╵   ~~~~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'index'. [plugin angular-compiler]
+
+    src/app/app.component.ts:216:12:
+      216 │   goToSlide(index: number) {
+          ╵             ~~~~~
+
+
+✘ [ERROR] TS1005: ',' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:216:17:
+      216 │   goToSlide(index: number) {
+          ╵                  ^
+
+
+✘ [ERROR] TS2693: 'number' only refers to a type, but is being used as a value here. [plugin angular-compiler]
+
+    src/app/app.component.ts:216:19:
+      216 │   goToSlide(index: number) {
+          ╵                    ~~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:216:27:
+      216 │   goToSlide(index: number) {
+          ╵                            ^
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:217:4:
+      217 │     this.currentSlide = index;
+          ╵     ~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'index'. [plugin angular-compiler]
+
+    src/app/app.component.ts:217:24:
+      217 │     this.currentSlide = index;
+          ╵                         ~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'toggleMenu'. [plugin angular-compiler]
+
+    src/app/app.component.ts:220:2:
+      220 │   toggleMenu() {
+          ╵   ~~~~~~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:220:15:
+      220 │   toggleMenu() {
+          ╵                ^
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:221:4:
+      221 │     this.isMenuOpen = !this.isMenuOpen;
+          ╵     ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:221:23:
+      221 │     this.isMenuOpen = !this.isMenuOpen;
+          ╵                        ~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'scrollToSection'. [plugin angular-compiler]
+
+    src/app/app.component.ts:224:2:
+      224 │   scrollToSection(sectionId: string) {
+          ╵   ~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'sectionId'. [plugin angular-compiler]
+
+    src/app/app.component.ts:224:18:
+      224 │   scrollToSection(sectionId: string) {
+          ╵                   ~~~~~~~~~
+
+
+✘ [ERROR] TS1005: ',' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:224:27:
+      224 │   scrollToSection(sectionId: string) {
+          ╵                            ^
+
+
+✘ [ERROR] TS2693: 'string' only refers to a type, but is being used as a value here. [plugin angular-compiler]
+
+    src/app/app.component.ts:224:29:
+      224 │   scrollToSection(sectionId: string) {
+          ╵                              ~~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:224:37:
+      224 │   scrollToSection(sectionId: string) {
+          ╵                                      ^
+
+
+✘ [ERROR] TS2304: Cannot find name 'sectionId'. [plugin angular-compiler]
+
+    src/app/app.component.ts:225:44:
+      225 │     const element = document.getElementById(sectionId);
+          ╵                                             ~~~~~~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:229:4:
+      229 │     this.isMenuOpen = false;
+          ╵     ~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'verifyCertificate'. [plugin angular-compiler]
+
+    src/app/app.component.ts:232:2:
+      232 │   verifyCertificate() {
+          ╵   ~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:232:22:
+      232 │   verifyCertificate() {
+          ╵                       ^
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:233:8:
+      233 │     if (this.certificateId.trim()) {
+          ╵         ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:234:6:
+      234 │       this.verificationResult = {
+          ╵       ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:235:15:
+      235 │         valid: this.certificateId.toLowerCase().startsWith('pop'),
+          ╵                ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:236:12:
+      236 │         id: this.certificateId,
+          ╵             ~~~~
+
+
+✘ [ERROR] TS2304: Cannot find name 'submitContact'. [plugin angular-compiler]
+
+    src/app/app.component.ts:244:2:
+      244 │   submitContact() {
+          ╵   ~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS1005: ';' expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:244:18:
+      244 │   submitContact() {
+          ╵                   ^
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:245:8:
+      245 │     if (this.contactForm.name && this.contactForm.email && this.c...
+          ╵         ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:245:33:
+      245 │ ...if (this.contactForm.name && this.contactForm.email && this.co...
+          ╵                                 ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:245:59:
+      245 │ ...orm.name && this.contactForm.email && this.contactForm.message) {
+          ╵                                          ~~~~
+
+
+✘ [ERROR] TS2532: Object is possibly 'undefined'. [plugin angular-compiler]
+
+    src/app/app.component.ts:247:6:
+      247 │       this.contactForm = { name: '', email: '', phone: '', messag...
+          ╵       ~~~~
+
+
+✘ [ERROR] TS1128: Declaration or statement expected. [plugin angular-compiler]
+
+    src/app/app.component.ts:250:0:
+      250 │ }
+          ╵ ^
+
+
+✘ [ERROR] Unterminated string literal
+
+    src/app/app.component.ts:1194:3:
+      1194 │ '];
+           ╵    ^
+
+
+Watch mode enabled. Watching for file changes...

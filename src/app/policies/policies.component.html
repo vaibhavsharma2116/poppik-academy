@@ -1,0 +1,72 @@
+
+<div class="policies-page">
+  <div class="policies-header">
+    <div class="container">
+      <h1 class="page-title">Policies & Terms</h1>
+      <p class="page-subtitle">Poppik Academy - Committed to Transparent, Safe, and Professional Learning</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="policies-content">
+      @for (policy of policies; track policy.id) {
+        <div class="policy-section" [id]="policy.id">
+          <div class="policy-header">
+            <span class="policy-icon">{{ policy.icon }}</span>
+            <h2>{{ policy.title }}</h2>
+          </div>
+
+          <div class="policy-body">
+            @if (policy.content) {
+              <p class="policy-text">{{ policy.content }}</p>
+            }
+
+            @if (policy.intro) {
+              <p class="policy-intro">{{ policy.intro }}</p>
+            }
+
+            @if (policy.points) {
+              <ul class="policy-list">
+                @for (point of policy.points; track point) {
+                  <li>{{ point }}</li>
+                }
+              </ul>
+            }
+
+            @if (policy.contact) {
+              <div class="contact-box">
+                <div class="contact-item">
+                  <strong>Grievance Officer:</strong> {{ policy.contact.officer }}
+                </div>
+                <div class="contact-item">
+                  <strong>Email:</strong> <a href="mailto:{{ policy.contact.email }}">{{ policy.contact.email }}</a>
+                </div>
+                <div class="contact-item">
+                  <strong>Phone:</strong> <a href="tel:{{ policy.contact.phone }}">{{ policy.contact.phone }}</a>
+                </div>
+              </div>
+            }
+
+            @if (policy.footer) {
+              <p class="policy-footer">{{ policy.footer }}</p>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="back-to-top" (click)="scrollToTop()">
+      <span>↑</span>
+      <span>Back to Top</span>
+    </div>
+  </div>
+
+  <div class="policies-bottom">
+    <div class="container">
+      <p class="commitment-text">
+        <strong>Poppik Academy</strong> – Committed to Transparent, Safe, and Professional Learning.
+      </p>
+      <p class="copyright-text">&copy; 2025 Poppik Academy. All Rights Reserved.</p>
+    </div>
+  </div>
+</div>

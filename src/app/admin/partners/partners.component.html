@@ -1,0 +1,94 @@
+
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Partners</h1>
+    <button class="btn-add" (click)="openAddModal()">
+      <span class="material-icons">add</span>
+      Add Partner
+    </button>
+  </header>
+
+  <div class="content-card">
+    @if (partners.length === 0) {
+      <div class="empty-state">
+        <span class="material-icons">handshake</span>
+        <p>No partners yet</p>
+        <button class="btn-add" (click)="openAddModal()">Add Your First Partner</button>
+      </div>
+    }
+    @if (partners.length > 0) {
+      <div class="partners-grid">
+        @for (partner of partners; track partner.id) {
+          <div class="partner-card">
+            @if (partner.logo) {
+              <img [src]="partner.logo" [alt]="partner.name">
+            } @else {
+              <div class="no-logo">{{ partner.name }}</div>
+            }
+            <h3>{{ partner.name }}</h3>
+            <p>{{ partner.description }}</p>
+            <div class="partner-actions">
+              <button class="action-btn edit" (click)="openEditModal(partner)">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="action-btn delete" (click)="deletePartner(partner.id)">
+                <span class="material-icons">delete</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
+
+@if (showModal) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editMode ? 'Edit Partner' : 'Add Partner' }}</h2>
+        <button class="modal-close" (click)="closeModal()">&times;</button>
+      </div>
+      <form (ngSubmit)="savePartner()">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Partner Name *</label>
+            <input type="text" [(ngModel)]="currentPartner.name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label>Logo Upload</label>
+            <input type="file" (change)="onLogoFileChange($event)" accept="image/*" />
+            <div *ngIf="currentPartner.logo" class="preview">
+              <img [src]="currentPartner.logo" alt="logo preview" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Website</label>
+            <input type="text" [(ngModel)]="currentPartner.website" name="website" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea [(ngModel)]="currentPartner.description" name="description" rows="3"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Sort Order</label>
+              <input type="number" [(ngModel)]="currentPartner.sort_order" name="sort_order">
+            </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select [(ngModel)]="currentPartner.status" name="status">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-add">{{ editMode ? 'Update' : 'Add' }} Partner</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

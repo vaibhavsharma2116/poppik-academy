@@ -1,0 +1,129 @@
+
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Blogs</h1>
+    <button class="btn-add" (click)="openAddModal()">
+      <span class="material-icons">add</span>
+      Add Blog Post
+    </button>
+  </header>
+
+  <div class="content-card">
+    @if (blogs.length === 0) {
+      <div class="empty-state">
+        <span class="material-icons">article</span>
+        <p>No blog posts yet</p>
+        <button class="btn-add" (click)="openAddModal()">Create Your First Blog Post</button>
+      </div>
+    }
+    @if (blogs.length > 0) {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (blog of blogs; track blog.id) {
+            <tr>
+              <td>{{ blog.id }}</td>
+              <td>{{ blog.title }}</td>
+              <td>{{ blog.author || '-' }}</td>
+              <td>{{ blog.category }}</td>
+              <td>{{ blog.created_at | date:'MMM d, y' }}</td>
+              <td>
+                <span class="status-badge" [class]="blog.status.toLowerCase()">{{ blog.status }}</span>
+              </td>
+              <td class="actions">
+                <button class="action-btn edit" (click)="openEditModal(blog)">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="action-btn delete" (click)="deleteBlog(blog.id)">
+                  <span class="material-icons">delete</span>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>
+
+@if (showModal) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editMode ? 'Edit Blog Post' : 'Add Blog Post' }}</h2>
+        <button class="modal-close" (click)="closeModal()">&times;</button>
+      </div>
+      <form (ngSubmit)="saveBlog()">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Title *</label>
+            <input type="text" [(ngModel)]="currentBlog.title" name="title" required>
+          </div>
+          <div class="form-group">
+            <label>Excerpt</label>
+            <textarea [(ngModel)]="currentBlog.excerpt" name="excerpt" rows="2" placeholder="Brief summary..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Content</label>
+            <div class="editor-toolbar">
+              <button type="button" (click)="execCommand('bold')" title="Bold"><strong>B</strong></button>
+              <button type="button" (click)="execCommand('italic')" title="Italic"><em>I</em></button>
+              <button type="button" (click)="execCommand('underline')" title="Underline"><u>U</u></button>
+              <button type="button" (click)="execCommand('insertUnorderedList')" title="Bullet List">• List</button>
+              <button type="button" (click)="execCommand('insertOrderedList')" title="Numbered List">1. List</button>
+              <button type="button" (click)="addLink()" title="Link">Link</button>
+              <button type="button" (click)="execCommand('undo')" title="Undo">↶ Undo</button>
+              <button type="button" (click)="execCommand('redo')" title="Redo">↷ Redo</button>
+            </div>
+            <div class="text-editor"
+              contenteditable="true"
+              [(ngModel)]="currentBlog.content"
+              name="content"
+              placeholder="Write your article here..."
+              (blur)="onEditorBlur($event)"></div>
+          </div>
+          <div class="form-group">
+            <label>Upload Image</label>
+            <input type="file" (change)="onFileSelected($event)">
+            <div *ngIf="selectedFile" class="small muted">Selected: {{ selectedFile.name }}</div>
+            <div *ngIf="!selectedFile && currentBlog.image" class="small muted">Current: {{ currentBlog.image }}</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Author</label>
+              <input type="text" [(ngModel)]="currentBlog.author" name="author">
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select [(ngModel)]="currentBlog.category" name="category">
+                <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+                <option *ngIf="categories.indexOf('General')===-1" value="General">General</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select [(ngModel)]="currentBlog.status" name="status">
+              <option value="Published">Published</option>
+              <option value="Draft">Draft</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-add">{{ editMode ? 'Update' : 'Add' }} Blog</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

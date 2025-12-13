@@ -1,0 +1,216 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 180px;
+  background: linear-gradient(180deg, #2C3E50 0%, #34495e 50%, #2C3E50 100%);
+  color: #fff;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar-header {
+  padding: 20px 15px;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.logo span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #D4A574;
+  display: block;
+  margin-top: 2px;
+}
+
+.sidebar-nav {
+  padding: 10px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 13px;
+  font-weight: 400;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: linear-gradient(90deg, #D4A574 0%, #C08B5C 100%);
+  color: #fff;
+  border-left: 3px solid #D4A574;
+  border-radius: 0 25px 25px 0;
+  margin-right: 10px;
+  box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+}
+
+.nav-item .material-icons {
+  font-size: 20px;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 180px;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* admin header */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background: #ffffff; /* white background */
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.btn-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #D4A574;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.profile-name { font-weight: 600; color: #2c3e50; }
+
+.profile-menu {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  background: #fff;
+  border: 1px solid #eee;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-menu a {
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.profile-menu a:hover { background: #f5f5f5; }
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar-header {
+    padding: 15px 10px;
+    text-align: center;
+  }
+
+  .logo {
+    font-size: 14px;
+  }
+
+  .logo span {
+    display: none;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-item {
+    justify-content: center;
+    padding: 12px 10px;
+    gap: 0;
+  }
+
+  .nav-item.active {
+    margin-right: 5px;
+  }
+
+  .main-content {
+    margin-left: 60px;
+  }
+}
+
+/* collapsed sidebar state */
+.admin-layout.collapsed .sidebar {
+  width: 60px;
+}
+
+.admin-layout.collapsed .sidebar .logo span,
+.admin-layout.collapsed .sidebar .nav-label {
+  display: none;
+}
+
+.admin-layout.collapsed .main-content {
+  margin-left: 60px;
+}
+
+/* Make the main content area vertically scrollable while keeping header sticky */
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Target everything inside main-content except the header so the page body scrolls */
+.main-content > :not(.admin-header) {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}

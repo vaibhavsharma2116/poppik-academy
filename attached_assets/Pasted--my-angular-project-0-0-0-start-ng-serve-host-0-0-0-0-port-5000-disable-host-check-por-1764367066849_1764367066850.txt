@@ -1,0 +1,86 @@
+
+> my-angular-project@0.0.0 start
+> ng serve --host 0.0.0.0 --port 5000 --disable-host-check --port 4200
+
+Option 'port' has been specified multiple times. The value '4200' will be used.
+Warning: Running a server with --disable-host-check is a security risk. See https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a for more information.
+Application bundle generation failed. [10.999 seconds]
+✘ [ERROR] NG8: Type '{ courses: number; students: number; certificates: number; queries: number; blogs: number; partners: number; }' must have a '[Symbol.iterator]()' method that returns an iterator. [plugin angular-compiler]
+
+    src/app/admin/dashboard/dashboard.component.html:11:18:
+      11 │     @for (stat of stats; track stat.label) {
+         ╵                   ~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/admin/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'recentStudents' does not exist on type 'DashboardComponent'. [plugin angular-compiler]
+
+    src/app/admin/dashboard/dashboard.component.html:34:27:
+      34 │           @for (student of recentStudents; track student.email) {
+         ╵                            ~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/admin/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'recentStudents' does not exist on type 'DashboardComponent'. [plugin angular-compiler]
+
+    src/app/admin/dashboard/dashboard.component.html:45:15:
+      45 │           @if (recentStudents.length === 0) {
+         ╵                ~~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/admin/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'recentQueries' does not exist on type 'DashboardComponent'. [plugin angular-compiler]
+
+    src/app/admin/dashboard/dashboard.component.html:65:15:
+      65 │           @if (recentQueries.length === 0) {
+         ╵                ~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/admin/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] NG9: Property 'recentQueries' does not exist on type 'DashboardComponent'. [plugin angular-compiler]
+
+    src/app/admin/dashboard/dashboard.component.html:70:25:
+      70 │           @for (query of recentQueries; track query.id) {
+         ╵                          ~~~~~~~~~~~~~
+
+  Error occurs in the template of component DashboardComponent.
+
+    src/app/admin/dashboard/dashboard.component.ts:9:15:
+      9 │   templateUrl: './dashboard.component.html',
+        ╵                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Watch mode enabled. Watching for file changes...
+
+Initial Chunk Files | Names         |  Raw Size
+main.js             | main          | 322.37 kB | 
+polyfills.js        | polyfills     |  83.46 kB | 
+styles.css          | styles        |   3.47 kB | 
+
+                    | Initial Total | 409.30 kB
+
+Application bundle generation complete. [1.855 seconds]
+Re-optimizing dependencies because vite config has changed
+  ➜  Local:   http://localhost:4200/
+  ➜  Network: http://172.31.98.34:4200/
+  ➜  press h + enter to show help

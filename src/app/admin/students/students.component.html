@@ -1,0 +1,67 @@
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Students</h1>
+    <button class="btn-add" (click)="openCreate()">
+      <span class="material-icons">add</span>
+      Add Student
+    </button>
+  </header>
+
+  <div class="content-card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Course</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students; trackBy: trackById">
+          <td>{{ student.id }}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.course_name || student.course }}</td>
+          <td>
+            <span class="status-badge active">{{ student.status }}</span>
+          </td>
+          <td class="actions">
+            <button class="action-btn edit" (click)="openEdit(student)"><span class="material-icons">edit</span></button>
+            <button class="action-btn delete" (click)="confirmDelete(student)"><span class="material-icons">delete</span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Students modal -->
+  <div *ngIf="formVisible" class="modal-overlay" (click)="cancelForm()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="cancelForm()">&times;</button>
+      <div class="form-card">
+        <div class="form-header"><h3>{{ isEditing ? 'Edit Student' : 'Add Student' }}</h3></div>
+        <div class="form-body">
+          <div class="form-field"><label>Name</label><input class="input-lg" [(ngModel)]="form.name" /></div>
+          <div class="form-field"><label>Email</label><input class="input-lg" [(ngModel)]="form.email" /></div>
+          <div class="form-field"><label>Phone</label><input class="input-lg" [(ngModel)]="form.phone" /></div>
+          <div class="form-field"><label>Course</label>
+            <select class="input-lg" [(ngModel)]="form.course_id">
+              <option [ngValue]="null">Select course</option>
+              <option *ngFor="let c of courses" [ngValue]="c.id">{{ c.name }}</option>
+            </select>
+          </div>
+          <div class="form-field"><label>Status</label>
+            <select class="input-lg" [(ngModel)]="form.status"><option>Active</option><option>Inactive</option></select>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="btn-add btn-pill" (click)="save()">{{ isEditing ? 'Update' : 'Create' }}</button>
+          <button class="btn-add btn-secondary btn-pill" (click)="cancelForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

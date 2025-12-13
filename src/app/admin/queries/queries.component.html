@@ -1,0 +1,65 @@
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Queries</h1>
+  </header>
+
+  <div class="content-card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (queries.length === 0) {
+          <tr>
+            <td colspan="6" class="no-data">No queries yet</td>
+          </tr>
+        }
+        @for (query of queries; track query.id) {
+          <tr>
+            <td>{{ query.id }}</td>
+            <td>{{ query.name }}</td>
+            <td>{{ query.email }}</td>
+            <td>{{ query.subject }}</td>
+            <td>
+              <span class="status-badge" [class]="query.status.toLowerCase()">{{ query.status }}</span>
+            </td>
+            <td class="actions">
+              <button class="action-btn view" (click)="viewQuery(query)"><span class="material-icons">visibility</span></button>
+              <button type="button" class="action-btn reply" (click)="replyQuery(query)"><span class="material-icons">reply</span></button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- View modal -->
+@if (selectedQuery) {
+  <div class="modal-overlay" (click)="closeView()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Query Details</h2>
+        <button type="button" class="modal-close" (click)="$event.stopPropagation(); closeView()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Name:</strong> {{ selectedQuery.name }}</p>
+        <p><strong>Email:</strong> {{ selectedQuery.email }}</p>
+        <p><strong>Phone:</strong> {{ selectedQuery.phone || '-' }}</p>
+        <p><strong>Subject:</strong> {{ selectedQuery.subject || '-' }}</p>
+        <p><strong>Message:</strong></p>
+        <div style="background:#f8fafc;padding:15px;border-radius:8px;">{{ selectedQuery.message }}</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="$event.stopPropagation(); closeView()">Close</button>
+      </div>
+    </div>
+  </div>
+}

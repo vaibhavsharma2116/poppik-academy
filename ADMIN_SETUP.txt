@@ -1,0 +1,99 @@
+====================================
+ADMIN LOGIN & PASSWORD CHANGE GUIDE
+====================================
+
+ADMIN CREDENTIALS (Already Set Up):
+===================================
+Email: admin@example.com
+Password: admin123
+Admin ID: 1
+
+QUICK START:
+============
+
+1. MAKE SURE BACKEND IS RUNNING
+   - Run: npm start
+   - Or manually: php -S 127.0.0.1:8000 (in php-admin folder)
+
+2. LOGIN TO ADMIN PANEL
+   - Go to: http://localhost:5000/admin/login
+   - Email: admin@example.com
+   - Password: admin123
+   - Click "Login"
+
+3. VERIFY LOGIN SUCCESS
+   - Open browser DevTools (F12)
+   - Go to "Console" tab
+   - You should see logs like:
+     [Login] Attempting login with email: admin@example.com
+     [Login] Response: {success: true, adminId: 1, ...}
+     [Login] Setting admin ID: 1
+   - Go to "Application" tab → "LocalStorage"
+   - You should see key "adminId" with value "1"
+
+4. CHANGE PASSWORD
+   - You're now on the dashboard
+   - Navigate to "Change Password" (in settings/profile)
+   - Enter:
+     Current Password: admin123
+     New Password: (your choice)
+     Confirm Password: (repeat)
+   - Click "Change Password"
+   - Success! You should see: "Password changed successfully."
+
+TROUBLESHOOTING:
+================
+
+Q: Getting "Not authenticated" error on change-password?
+A:
+  1. Make sure you're logged in (check localStorage for adminId)
+  2. Check Console tab for any error messages
+  3. Check Network tab - look for the change-password request
+  4. Verify the URL includes: ?admin_id=1
+
+Q: Login fails with invalid credentials?
+A:
+  1. Run: php reset_password.php
+  2. This resets password to: admin123
+  3. Try login again
+
+Q: Backend not responding?
+A:
+  1. Make sure PHP server is running on port 8000
+  2. From php-admin folder: php -S 127.0.0.1:8000
+  3. Or check that npm start is running the development server
+
+Q: Can't see admin in database?
+A:
+  1. Run: php check_admin.php
+  2. Shows all admins and creates one if missing
+
+HELPFUL ENDPOINTS:
+==================
+
+Check database admins:
+  php check_admin.php
+
+Reset admin password to admin123:
+  php reset_password.php
+
+Debug authentication status:
+  http://localhost:8000/api/auth-check.php?admin_id=1
+  (Shows session, headers, and other debug info)
+
+Check if login works:
+  POST http://localhost:8000/api/login.php
+  Body: {"email": "admin@example.com", "password": "admin123"}
+
+Test change-password:
+  POST http://localhost:8000/api/change-password.php?admin_id=1
+  Body: {"currentPassword": "admin123", "newPassword": "newpass"}
+
+FILES INVOLVED:
+===============
+- Frontend: src/app/admin/login/admin-login.component.ts
+- Frontend: src/app/admin/change-password/change-password.component.ts
+- Backend: php-admin/api/login.php
+- Backend: php-admin/api/change-password.php
+- Database: sql/create_admin_table.sql
+- Interceptor: src/app/services/admin-auth.interceptor.ts

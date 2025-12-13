@@ -1,0 +1,37 @@
+<div class="admin-layout" [class.collapsed]="sidebarCollapsed">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1 class="logo">Poppik <span>ACADEMY</span></h1>
+    </div>
+    <nav class="sidebar-nav">
+      @for (item of menuItems; track item.route) {
+        <a [routerLink]="item.route" routerLinkActive="active" class="nav-item">
+          <span class="material-icons">{{ item.icon }}</span>
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="admin-header">
+      <button type="button" class="btn-toggle" (click)="toggleSidebar()">
+        <span class="material-icons">menu</span>
+      </button>
+
+      <div class="header-actions">
+        <div class="profile" tabindex="0" (click)="toggleProfileMenu()" (blur)="closeProfileMenu()">
+          <div class="avatar">A</div>
+          <div class="profile-name">Admin</div>
+          <div class="profile-menu" *ngIf="profileOpen">
+            <a (click)="goToProfile()">Edit Profile</a>
+            <a (click)="goToChangePassword()">Change Password</a>
+            <a (click)="logout()">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <router-outlet></router-outlet>
+  </main>
+</div>

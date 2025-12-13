@@ -1,0 +1,86 @@
+
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>Dashboard</h1>
+    <div class="admin-info">
+      <span class="material-icons">account_circle</span>
+      <span>Admin</span>
+    </div>
+  </header>
+
+  <div class="stats-grid">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card">
+        <div class="stat-icon">
+          <span>{{ stat.icon }}</span>
+        </div>
+        <div class="stat-count">{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+    }
+  </div>
+
+  <div class="tables-grid">
+    <div class="table-card">
+      <h2 class="table-title">Recent Students</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (recentStudents.length === 0) {
+            <tr>
+              <td colspan="3" class="no-data">No students yet</td>
+            </tr>
+          }
+          @for (student of recentStudents; track student.id) {
+            <tr>
+              <td>{{ student.name }}</td>
+              <td>{{ student.email }}</td>
+              <td>
+                <span class="status-badge" [class]="student.status.toLowerCase()">
+                  {{ student.status }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-card">
+      <h2 class="table-title">Recent Queries</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (recentQueries.length === 0) {
+            <tr>
+              <td colspan="3" class="no-data">No queries yet</td>
+            </tr>
+          }
+          @for (query of recentQueries; track query.id) {
+            <tr>
+              <td>{{ query.name }}</td>
+              <td>{{ query.subject }}</td>
+              <td>
+                <span class="status-badge" [class]="query.status.toLowerCase()">
+                  {{ query.status }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

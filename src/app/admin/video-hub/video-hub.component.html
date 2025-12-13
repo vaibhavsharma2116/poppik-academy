@@ -1,0 +1,128 @@
+
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Video Hub</h1>
+    <button class="btn-add" (click)="openAddModal()">
+      <span class="material-icons">video_call</span>
+      Add Video
+    </button>
+  </header>
+
+  <div class="content-card">
+    @if (videos.length === 0) {
+      <div class="empty-state">
+        <span class="material-icons">video_library</span>
+        <p>No videos yet</p>
+        <button class="btn-add" (click)="openAddModal()">Upload Your First Video</button>
+      </div>
+    }
+    @if (videos.length > 0) {
+      <div class="videos-grid">
+        @for (video of videos; track video.id) {
+          <div class="video-card">
+            <div class="video-thumbnail">
+              <img [src]="video.thumbnail || 'https://images.unsplash.com/photo-1487412912498-0447578fcca8?w=400'" [alt]="video.title">
+              <span class="play-icon material-icons" (click)="playVideo(video)">play_circle</span>
+              <span class="video-duration">{{ video.duration || '0:00' }}</span>
+            </div>
+            <div class="video-info">
+              <span class="video-category">{{ video.category }}</span>
+              <h3>{{ video.title }}</h3>
+              <p class="video-description">{{ video.description }}</p>
+            </div>
+            <div class="video-actions">
+              <button class="action-btn edit" (click)="editVideo(video)">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="action-btn delete" (click)="deleteVideo(video.id)">
+                <span class="material-icons">delete</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
+
+@if (showModal) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ isEditing ? 'Edit Video' : 'Add Video' }}</h2>
+        <button class="modal-close" (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Title *</label>
+          <input type="text" [(ngModel)]="videoForm.title" placeholder="Video title">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="videoForm.description" placeholder="Video description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Video URL</label>
+          <input type="text" [(ngModel)]="videoForm.video_url" placeholder="YouTube or video URL">
+          <label style="margin-top: 10px; display: block;">Or Upload Video File</label>
+          <input type="file" accept="video/*" (change)="onVideoFileSelected($event)">
+          <div *ngIf="videoFile" class="small muted">Selected: {{ videoFile.name }}</div>
+        </div>
+        <div class="form-group">
+          <label>Thumbnail URL</label>
+          <input type="text" [(ngModel)]="videoForm.thumbnail" placeholder="Thumbnail image URL">
+          <label style="margin-top: 10px; display: block;">Or Upload Thumbnail Image</label>
+          <input type="file" accept="image/*" (change)="onThumbnailFileSelected($event)">
+          <div *ngIf="thumbnailFile" class="small muted">Selected: {{ thumbnailFile.name }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <select [(ngModel)]="videoForm.category">
+              <option value="Beauty">Beauty</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Wellness">Wellness</option>
+              <option value="Tutorial">Tutorial</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Duration</label>
+            <input type="text" [(ngModel)]="videoForm.duration" placeholder="e.g. 10:30">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select [(ngModel)]="videoForm.status">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeModal()">Cancel</button>
+        <button class="btn-primary" (click)="saveVideo()">{{ isEditing ? 'Update' : 'Add' }} Video</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showPlayModal) {
+  <div class="modal-overlay" (click)="stopVideo()">
+    <div class="modal playback-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ playingVideo?.title || 'Playing Video' }}</h2>
+        <button class="modal-close" (click)="stopVideo()">&times;</button>
+      </div>
+      <div class="modal-body">
+          <div class="admin-player" style="margin-bottom:20px;">
+          <iframe *ngIf="isYouTubeAdmin" [src]="youtubeEmbedUrlAdmin | safe" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+          <video *ngIf="!isYouTubeAdmin && playingVideo?.video_url" controls autoplay muted playsinline preload="metadata">
+            <source [src]="playingVideo.video_url" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <p>{{ playingVideo?.description }}</p>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,79 @@
+<div class="admin-page">
+  <header class="page-header">
+    <h1>Certificates</h1>
+    <button class="btn-add" (click)="openCreate()">
+      <span class="material-icons">add</span>
+      Issue Certificate
+    </button>
+  </header>
+
+  <div class="content-card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Student Name</th>
+          <th>Course</th>
+          <th>Issue Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cert of certificates; trackBy: trackById">
+          <td>{{ cert.id }}</td>
+          <td>{{ cert.student_name || cert.studentName }}</td>
+          <td>{{ cert.course_name || cert.course }}</td>
+          <td>{{ cert.issue_date || cert.issueDate }}</td>
+          <td>
+            <span class="status-badge issued">{{ cert.status }}</span>
+          </td>
+          <td class="actions">
+            <button class="action-btn view"><span class="material-icons">visibility</span></button>
+            <button class="action-btn download"><span class="material-icons">download</span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Issue Certificate modal -->
+  <div *ngIf="formVisible" class="modal-overlay" (click)="cancelForm()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="cancelForm()">&times;</button>
+      <div class="form-card">
+        <div class="form-header"><h3>Issue Certificate</h3></div>
+        <div class="form-body">
+          <div class="form-field">
+            <label>Student</label>
+            <select class="input-lg" [(ngModel)]="form.student_id">
+              <option [ngValue]="null">Select Student</option>
+              <option *ngFor="let s of students" [ngValue]="s.id">{{ s.name }} ({{ s.email }})</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Course</label>
+            <select class="input-lg" [(ngModel)]="form.course_id">
+              <option [ngValue]="null">Select Course</option>
+              <option *ngFor="let c of courses" [ngValue]="c.id">{{ c.name }}</option>
+            </select>
+          </div>
+          <div class="form-row-grid">
+            <div class="form-field">
+              <label>Issue Date</label>
+              <input class="input-lg" type="date" [(ngModel)]="form.issue_date" />
+            </div>
+            <div class="form-field">
+              <label>Status</label>
+              <select class="input-lg" [(ngModel)]="form.status"><option>Issued</option><option>Pending</option></select>
+            </div>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="btn-add btn-pill" (click)="save()">Issue Certificate</button>
+          <button class="btn-add btn-secondary btn-pill" (click)="cancelForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
