@@ -204,18 +204,3 @@ input, textarea {
     margin-bottom: 40px;
   }
 }
-
-/* Global modal helpers */
-body.modal-open {
-  overflow: hidden !important;
-}
-
-/* Allow overlay to scroll if modal is taller than viewport */
-.modal-overlay {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.modal-overlay .modal {
-  margin: 40px auto;
-}

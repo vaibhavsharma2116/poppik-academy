@@ -9,35 +9,40 @@
   </header>
 
   <div class="content-card">
-    <div *ngIf="images.length === 0" class="empty-state">
-      <span class="material-icons">photo_library</span>
-      <p>No images in gallery yet</p>
-      <button class="btn-add" (click)="openAddModal()">Upload Your First Image</button>
-    </div>
-
-    <div *ngIf="images.length > 0" class="gallery-grid">
-      <div *ngFor="let image of images" class="gallery-item">
-        <img [src]="resolveImage(image.image)" [alt]="image.title" (error)="$any($event.target).src='assets/placeholder.png'">
-        <div class="image-overlay">
-          <div class="image-info">
-            <h4>{{ image.title }}</h4>
-            <span class="category-badge">{{ image.category }}</span>
-          </div>
-          <div class="image-actions">
-            <button class="action-btn edit" (click)="openEditModal(image)">
-              <span class="material-icons">edit</span>
-            </button>
-            <button class="action-btn delete" (click)="deleteImage(image.id)">
-              <span class="material-icons">delete</span>
-            </button>
-          </div>
-        </div>
+    @if (images.length === 0) {
+      <div class="empty-state">
+        <span class="material-icons">photo_library</span>
+        <p>No images in gallery yet</p>
+        <button class="btn-add" (click)="openAddModal()">Upload Your First Image</button>
       </div>
-    </div>
+    }
+    @if (images.length > 0) {
+      <div class="gallery-grid">
+        @for (image of images; track image.id) {
+          <div class="gallery-item">
+            <img [src]="image.image || defaultImage" [alt]="image.title" (error)="handleImageError($event)">
+            <div class="image-overlay">
+              <div class="image-info">
+                <h4>{{ image.title }}</h4>
+                <span class="category-badge">{{ image.category }}</span>
+              </div>
+              <div class="image-actions">
+                <button class="action-btn edit" (click)="openEditModal(image)">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="action-btn delete" (click)="deleteImage(image.id)">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
   </div>
 </div>
 
-<ng-container *ngIf="showModal">
+@if (showModal) {
   <div class="modal-overlay" (click)="closeModal()">
     <div class="modal" (click)="$event.stopPropagation()">
       <div class="modal-header">
@@ -81,4 +86,4 @@
       </div>
     </div>
   </div>
-</ng-container>
+}

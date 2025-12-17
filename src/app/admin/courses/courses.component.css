@@ -150,14 +150,10 @@
   position: relative;
 }
 
-/* Keep modal within viewport and make inner form scrollable */
+/* Ensure modal fits viewport and becomes scrollable when content is tall */
 .modal {
   max-height: calc(100vh - 80px);
-  display: flex;
-  flex-direction: column;
-  /* allow modal to scroll when content is taller than viewport */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: auto;
 }
 
 .modal h3 { margin-top: 0; margin-bottom: 14px; font-size: 22px; }
@@ -224,14 +220,18 @@
   padding: 22px;
   box-shadow: 0 6px 24px rgba(0,0,0,0.08);
   border: 1px solid rgba(212,165,116,0.12);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 }
 
 .form-card .form-header h3 { margin:0 0 8px; font-size:22px; font-weight:700; }
 
-.form-body { padding-top: 6px; flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.form-body { padding-top: 6px; }
+
+/* Make the body area scrollable so header/footer remain visible on small screens */
+.form-body {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  padding-right: 6px; /* space for scrollbar */
+}
 
 .form-row-grid { display:grid; grid-template-columns: 1fr 280px; gap:18px; align-items:start; }
 .form-field { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
@@ -290,26 +290,4 @@
 
 @media (max-width:800px) {
   .form-row-grid { grid-template-columns: 1fr; }
-}
-
-/* Ensure scrollbar is visible and usable inside the form-body */
-.form-body {
-  scrollbar-gutter: stable;
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #D4A574 transparent; /* Firefox: thumb then track */
-}
-
-.form-body::-webkit-scrollbar {
-  width: 10px;
-}
-.form-body::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 8px;
-}
-.form-body::-webkit-scrollbar-thumb {
-  background: #D4A574;
-  border-radius: 8px;
-}
-.form-body::-webkit-scrollbar-thumb:hover {
-  background: #C08B5C;
 }

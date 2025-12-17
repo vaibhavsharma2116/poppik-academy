@@ -321,20 +321,3 @@
 
 /* prevent background scroll when modal open */
 .modal-open { overflow: hidden; }
-
-/* Gallery modal styles */
-.gallery-modal { position: fixed; inset: 0; display:flex; align-items:center; justify-content:center; z-index:1300; }
-.gallery-modal-backdrop { position:absolute; inset:0; background: rgba(0,0,0,0.7); }
-.gallery-modal-box { position:relative; z-index:1301; width:90%; max-width:900px; max-height:90vh; background:#111; border-radius:10px; overflow:hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); display:flex; flex-direction:column; }
-.gallery-modal-close { position:absolute; top:12px; right:12px; z-index:1302; background: rgba(255,255,255,0.06); border: none; color: #fff; width:40px; height:40px; border-radius:8px; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-.gallery-modal-close:hover { background: rgba(255,255,255,0.12); color:#D4A574; }
-.gallery-modal-content { padding:18px; overflow:auto; }
-.gallery-modal-image-wrap { display:flex; align-items:center; justify-content:center; min-height:60vh; }
-.gallery-modal-image-wrap img { max-width:100%; max-height:80vh; object-fit:contain; border-radius:6px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
-
-/* show a clear vertical scrollbar inside the modal content */
-.gallery-modal-content { scrollbar-width: thin; scrollbar-color: #D4A574 rgba(255,255,255,0.03); }
-.gallery-modal-content::-webkit-scrollbar { width: 10px; }
-.gallery-modal-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
-.gallery-modal-content::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#D4A574,#C08B5C); border-radius: 10px; }
-.gallery-modal-content::-webkit-scrollbar-thumb:hover { background: #C08B5C; }

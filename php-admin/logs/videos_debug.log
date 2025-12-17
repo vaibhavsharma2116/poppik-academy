@@ -1,0 +1,96 @@
+2025-12-15 06:57:54 [REQUEST_START] Array
+(
+    [method] => GET
+    [uri] => /api/videos.php
+    [headers] => Array
+        (
+            [cookie] => PHPSESSID=chb0jjb6hd6750ktrbb2ijd8pm
+            [accept-language] => en-US,en;q=0.9
+            [accept-encoding] => gzip, deflate, br, zstd
+            [referer] => http://localhost:5000/
+            [sec-fetch-dest] => empty
+            [sec-fetch-mode] => cors
+            [sec-fetch-site] => same-origin
+            [sec-ch-ua-mobile] => ?0
+            [sec-ch-ua] => "Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+            [accept] => application/json, text/plain, */*
+            [user-agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+            [sec-ch-ua-platform] => "Windows"
+            [connection] => close
+            [host] => localhost:8000
+        )
+
+)
+
+2025-12-15 06:58:13 [REQUEST_START] Array
+(
+    [method] => GET
+    [uri] => /api/videos.php
+    [headers] => Array
+        (
+            [cookie] => PHPSESSID=chb0jjb6hd6750ktrbb2ijd8pm
+            [accept-language] => en-US,en;q=0.9
+            [accept-encoding] => gzip, deflate, br, zstd
+            [referer] => http://localhost:5000/admin/video-hub
+            [sec-fetch-dest] => empty
+            [sec-fetch-mode] => cors
+            [sec-fetch-site] => same-origin
+            [sec-ch-ua-mobile] => ?0
+            [sec-ch-ua] => "Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+            [accept] => application/json, text/plain, */*
+            [user-agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+            [sec-ch-ua-platform] => "Windows"
+            [connection] => close
+            [host] => localhost:8000
+        )
+
+)
+
+2025-12-15 06:58:46 [REQUEST_START] Array
+(
+    [method] => GET
+    [uri] => /api/videos.php
+    [headers] => Array
+        (
+            [cookie] => PHPSESSID=chb0jjb6hd6750ktrbb2ijd8pm
+            [accept-language] => en-US,en;q=0.9
+            [accept-encoding] => gzip, deflate, br, zstd
+            [referer] => http://localhost:5000/admin/video-hub
+            [sec-fetch-dest] => empty
+            [sec-fetch-mode] => cors
+            [sec-fetch-site] => same-origin
+            [sec-ch-ua-mobile] => ?0
+            [sec-ch-ua] => "Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+            [accept] => application/json, text/plain, */*
+            [user-agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+            [sec-ch-ua-platform] => "Windows"
+            [connection] => close
+            [host] => localhost:8000
+        )
+
+)
+
+2025-12-15 06:58:50 [REQUEST_START] Array
+(
+    [method] => GET
+    [uri] => /api/videos.php
+    [headers] => Array
+        (
+            [cookie] => PHPSESSID=chb0jjb6hd6750ktrbb2ijd8pm
+            [accept-language] => en-US,en;q=0.9
+            [accept-encoding] => gzip, deflate, br, zstd
+            [referer] => http://localhost:5000/admin/video-hub
+            [sec-fetch-dest] => empty
+            [sec-fetch-mode] => cors
+            [sec-fetch-site] => same-origin
+            [sec-ch-ua-mobile] => ?0
+            [sec-ch-ua] => "Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+            [accept] => application/json, text/plain, */*
+            [user-agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+            [sec-ch-ua-platform] => "Windows"
+            [connection] => close
+            [host] => localhost:8000
+        )
+
+)
+

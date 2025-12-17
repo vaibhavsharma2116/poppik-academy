@@ -1,7 +1,5 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AdminService } from '../services/admin.service';
 
@@ -78,7 +76,7 @@ import { AdminService } from '../services/admin.service';
 
   <div *ngIf="blog; else loading">
     <div class="blog-hero">
-      <img *ngIf="blog.image" [src]="blog.image" [alt]="blog.title">
+      <img *ngIf="heroImage" [src]="heroImage" [alt]="blog.title">
     </div>
 
     <div class="container blog-detail">
@@ -94,7 +92,7 @@ import { AdminService } from '../services/admin.service';
 
       <p *ngIf="blog.excerpt" class="excerpt">{{ blog.excerpt }}</p>
 
-      <div class="content" [innerHTML]="sanitizedContent"></div>
+      <div class="content" [innerHTML]="blog.content"></div>
     </div>
   </div>
   <ng-template #loading>
@@ -104,16 +102,10 @@ import { AdminService } from '../services/admin.service';
 })
 export class BlogDetailComponent implements OnInit {
   blog: any = null;
-  sanitizedContent: SafeHtml | null = null;
   isMenuOpen = false;
+  heroImage: string = '';
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private adminService: AdminService,
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private sanitizer: DomSanitizer
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router, private adminService: AdminService) {}
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
@@ -132,13 +124,12 @@ export class BlogDetailComponent implements OnInit {
         if (resp && resp.success && Array.isArray(resp.data)) {
           const found = resp.data.find((b: any) => String(b.id) === String(id));
           if (found) {
-            let backendBase = 'http://localhost:8000';
-            if (isPlatformBrowser(this.platformId)) {
-              const backendHost = window.location.hostname || 'localhost';
-              const backendPort = '8000';
-              backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
-            }
+            const backendHost = window.location.hostname || 'localhost';
+            const backendPort = '8000';
+            const backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
             const image = found.image ? this.normalizeImageUrl(found.image, backendBase) : '';
+            const extracted = !image ? this.extractImageFromContent(found.content, backendBase) : '';
+            this.heroImage = image || extracted || (window.location.protocol + '//' + backendHost + ':' + backendPort + '/assets/placeholder-blog.svg');
             this.blog = {
               id: found.id,
               title: found.title,
@@ -149,9 +140,6 @@ export class BlogDetailComponent implements OnInit {
               date: new Date(found.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
               image
             };
-            // Sanitize HTML content for binding. Only bypass security for
-            // content you trust from the backend.
-            this.sanitizedContent = this.sanitizer.bypassSecurityTrustHtml(this.blog.content || '');
           } else {
             // not found -> redirect to home
             this.router.navigate(['/']);
@@ -168,22 +156,20 @@ export class BlogDetailComponent implements OnInit {
     if (!url) return '';
     url = url.replace(/\\/g, '/');
     url = url.replace('/php-admin', '');
-    // If the URL contains the uploads path, return a relative path
-    // like `/uploads/...` so the browser requests it from the current
-    // origin. This avoids hard-coding `localhost:8000` which may not be
-    // available in the environment the frontend is served from.
-    const uploadsIndex = url.indexOf('/uploads/');
-    if (uploadsIndex !== -1) {
-      const uploadsPath = url.slice(uploadsIndex);
-      // Ensure the image is requested from the backend server where uploads are served.
-      // This prefixes the uploads path with the backend base (including host and port).
-      return backendBase.replace(/\/$/, '') + uploadsPath;
-    }
-
-    // If it's an absolute URL to another host, keep it as-is.
     if (/^https?:\/\//i.test(url)) return url;
-
     if (url.charAt(0) !== '/') url = '/' + url;
     return backendBase + url;
+  }
+
+  private extractImageFromContent(content: string, backendBase: string): string {
+    if (!content) return '';
+    const m = /<img[^>]+src\s*=\s*"([^"]+)"/i.exec(content);
+    if (m && m[1]) {
+      const src = m[1].replace(/\\/g, '/');
+      if (/^https?:\/\//i.test(src)) return src;
+      if (src.charAt(0) !== '/') return backendBase + '/' + src;
+      return backendBase + src;
+    }
+    return '';
   }
 }

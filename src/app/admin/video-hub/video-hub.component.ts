@@ -1,6 +1,5 @@
 
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
@@ -38,7 +37,7 @@ export class VideoHubComponent implements OnInit {
   videoFile: File | null = null;
   thumbnailFile: File | null = null;
 
-  constructor(private adminService: AdminService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit() {
     this.loadVideos();
@@ -49,12 +48,9 @@ export class VideoHubComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           // Normalize thumbnails and video URLs to absolute paths so players can load them
-          let backendBase = 'http://localhost:8000';
-          if (isPlatformBrowser(this.platformId)) {
-            const backendHost = window.location.hostname || 'localhost';
-            const backendPort = '8000';
-            backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
-          }
+          const backendHost = window.location.hostname || 'localhost';
+          const backendPort = '8000';
+          const backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
           this.videos = (response.data || []).map((v: any) => {
             const thumb = v.thumbnail || '';
             const vidUrl = v.video_url || v.videoUrl || '';
@@ -94,12 +90,9 @@ export class VideoHubComponent implements OnInit {
     // normalize URL if necessary
     let url = video.video_url || video.videoUrl || '';
     if (url && !/^https?:\/\//i.test(url)) {
-      let backendBase = 'http://localhost:8000';
-      if (isPlatformBrowser(this.platformId)) {
-        const backendHost = window.location.hostname || 'localhost';
-        const backendPort = '8000';
-        backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
-      }
+      const backendHost = window.location.hostname || 'localhost';
+      const backendPort = '8000';
+      const backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
       if (url.charAt(0) !== '/') url = '/' + url;
       url = backendBase + url;
     }
@@ -120,9 +113,8 @@ export class VideoHubComponent implements OnInit {
       this.youtubeEmbedUrlAdmin = '';
     }
     // prevent background scroll while playing
-    if (isPlatformBrowser(this.platformId)) {
-      try { document.body.style.overflow = 'hidden'; } catch(e) {}
-    }
+    // Prevent background scroll (inline style so it applies globally)
+    try { document.body.style.overflow = 'hidden'; } catch(e) {}
   }
 
   stopVideo() {
@@ -131,9 +123,7 @@ export class VideoHubComponent implements OnInit {
     this.showPlayModal = false;
     this.isYouTubeAdmin = false;
     this.youtubeEmbedUrlAdmin = '';
-    if (isPlatformBrowser(this.platformId)) {
-      try { document.body.style.overflow = ''; } catch(e) {}
-    }
+    try { document.body.style.overflow = ''; } catch(e) {}
   }
 
   openAddModal() {

@@ -1,6 +1,5 @@
 
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,17 +11,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./policies.component.css']
 })
 export class PoliciesComponent implements OnInit {
-  constructor(private route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.fragment.subscribe(fragment => {
       if (fragment) {
         setTimeout(() => {
-          if (isPlatformBrowser(this.platformId)) {
-            const element = document.getElementById(fragment);
-            if (element) {
-              element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+          const element = document.getElementById(fragment);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }, 100);
       }
@@ -107,17 +104,13 @@ export class PoliciesComponent implements OnInit {
   ];
 
   scrollToPolicy(policyId: string) {
-    if (isPlatformBrowser(this.platformId)) {
-      const element = document.getElementById(policyId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    const element = document.getElementById(policyId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
   scrollToTop() {
-    if (isPlatformBrowser(this.platformId)) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

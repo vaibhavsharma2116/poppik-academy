@@ -17,19 +17,6 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  // Serve uploads (images) from project `php-admin/uploads` so URLs like
-  // `/uploads/gallery/...` resolve from this server.
-  const uploadsFolder = resolve(process.cwd(), 'php-admin', 'uploads');
-  server.use('/uploads', express.static(uploadsFolder, { maxAge: '1d' }));
-
-  // Allow simple CORS for static assets and API responses (helps when
-  // frontend runs on a different port during development).
-  server.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
-
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser

@@ -1,6 +1,5 @@
 
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -63,9 +62,6 @@ export class HomeComponent implements OnInit {
 
   galleryImages: any[] = [];
 
-  // selected image for gallery modal
-  public gallerySelectedImage: string | null = null;
-
   // selected course for modal
   selectedCourse: any = null;
   // selected video for inline modal
@@ -73,7 +69,7 @@ export class HomeComponent implements OnInit {
   isYouTubeModal = false;
   youtubeEmbedUrlModal = '';
 
-  constructor(private adminService: AdminService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit() {
     this.loadHeroSliders();
@@ -88,12 +84,9 @@ export class HomeComponent implements OnInit {
     this.adminService.getVideos().subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
-          let backendBase = 'http://localhost:8000';
-          if (isPlatformBrowser(this.platformId)) {
-            const backendHost = window.location.hostname || 'localhost';
-            const backendPort = '8000';
-            backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
-          }
+          const backendHost = window.location.hostname || 'localhost';
+          const backendPort = '8000';
+          const backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
 
           this.videos = response.data.slice(0, 3).map((v: any) => ({
             id: v.id,
@@ -127,12 +120,9 @@ export class HomeComponent implements OnInit {
     this.adminService.getGallery().subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
-          let backendBase = 'http://localhost:8000';
-          if (isPlatformBrowser(this.platformId)) {
-            const backendHost = window.location.hostname || 'localhost';
-            const backendPort = '8000';
-            backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
-          }
+          const backendHost = window.location.hostname || 'localhost';
+          const backendPort = '8000';
+          const backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
           this.galleryImages = response.data.map((item: any) => this.normalizeImageUrl(item.image, backendBase));
         } else {
           this.setDefaultGallery();
@@ -160,12 +150,9 @@ export class HomeComponent implements OnInit {
     this.adminService.getPartners().subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
-          let backendBase = 'http://localhost:8000';
-          if (isPlatformBrowser(this.platformId)) {
-            const backendHost = window.location.hostname || 'localhost';
-            const backendPort = '8000';
-            backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
-          }
+          const backendHost = window.location.hostname || 'localhost';
+          const backendPort = '8000';
+          const backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
           this.partners = response.data.map((p: any) => ({ ...p, logo: this.normalizeImageUrl(p.logo, backendBase) }));
         } else {
           this.setDefaultPartners();
@@ -194,12 +181,9 @@ export class HomeComponent implements OnInit {
       next: (response) => {
         if (response.success && response.data.length > 0) {
           // ensure image URLs are absolute so the browser can load them
-          let backendBase = 'http://localhost:8000';
-          if (isPlatformBrowser(this.platformId)) {
-            const backendHost = window.location.hostname || 'localhost';
-            const backendPort = '8000';
-            backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
-          }
+          const backendHost = window.location.hostname || 'localhost';
+          const backendPort = '8000';
+          const backendBase = window.location.protocol + '//' + backendHost + ':' + backendPort;
 
           this.blogs = response.data.slice(0, 3).map((blog: any) => {
             let img = this.normalizeImageUrl(blog.image || '', backendBase) || 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400';
@@ -395,18 +379,6 @@ export class HomeComponent implements OnInit {
     this.selectedCourse = course;
     // optional: focus management or prevent background scroll
     document.body.classList.add('modal-open');
-  }
-
-  // Open gallery image modal
-  public openGalleryImage(image: string): void {
-    this.gallerySelectedImage = image;
-    try { document.body.style.overflow = 'hidden'; } catch (e) {}
-  }
-
-  // Close gallery image modal
-  public closeGalleryModal(): void {
-    this.gallerySelectedImage = null;
-    try { document.body.style.overflow = ''; } catch (e) {}
   }
 
   // Close the course modal

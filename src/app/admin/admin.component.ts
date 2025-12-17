@@ -1,5 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
@@ -28,23 +27,19 @@ export class AdminComponent implements OnInit {
     { icon: 'settings', label: 'Settings', route: '/admin/settings' }
   ];
 
-  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      try {
-        const v = localStorage.getItem('admin.sidebarCollapsed');
-        if (v !== null) this.sidebarCollapsed = JSON.parse(v);
-      } catch (e) {}
-    }
+    try {
+      const v = localStorage.getItem('admin.sidebarCollapsed');
+      if (v !== null) this.sidebarCollapsed = JSON.parse(v);
+    } catch (e) {}
   }
 
   toggleSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
     // persist preference
-    if (isPlatformBrowser(this.platformId)) {
-      try { localStorage.setItem('admin.sidebarCollapsed', JSON.stringify(this.sidebarCollapsed)); } catch(e){}
-    }
+    try { localStorage.setItem('admin.sidebarCollapsed', JSON.stringify(this.sidebarCollapsed)); } catch(e){}
   }
 
   toggleProfileMenu() {
@@ -69,9 +64,7 @@ export class AdminComponent implements OnInit {
   logout() {
     this.closeProfileMenu();
     // placeholder logout behaviour
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('authToken');
-    }
+    localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
   }
 }

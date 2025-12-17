@@ -48,21 +48,18 @@ export class CoursesComponent implements OnInit {
     openCreate() {
       this.resetForm();
       this.isEditing = false;
-        this.formVisible = true;
-        this.setBodyScrollLocked(true);
+      this.formVisible = true;
     }
 
     openEdit(course: any) {
       this.form = { ...course };
       this.isEditing = true;
-        this.formVisible = true;
-        this.setBodyScrollLocked(true);
+      this.formVisible = true;
     }
 
     cancelForm() {
-        this.formVisible = false;
-        this.setBodyScrollLocked(false);
-        this.resetForm();
+      this.formVisible = false;
+      this.resetForm();
     }
 
     resetForm() {
@@ -81,17 +78,6 @@ export class CoursesComponent implements OnInit {
           next: () => { this.loadCourses(); this.formVisible = false; },
           error: () => alert('Create failed')
         });
-      }
-    }
-
-    private setBodyScrollLocked(lock: boolean) {
-      try {
-        if (typeof document !== 'undefined' && document && document.body) {
-          if (lock) document.body.classList.add('modal-open');
-          else document.body.classList.remove('modal-open');
-        }
-      } catch (e) {
-        // ignore in environments without DOM
       }
     }
 

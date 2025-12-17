@@ -186,7 +186,7 @@
 
     <div class="gallery-grid">
       @for (image of galleryImages; track image; let i = $index) {
-        <div class="gallery-item" [class.wide]="i === 0 || i === 5" (click)="openGalleryImage(image)" role="button" tabindex="0">
+        <div class="gallery-item" [class.wide]="i === 0 || i === 5">
           <img [src]="image" alt="Gallery image">
           <div class="gallery-overlay">
             <span class="gallery-zoom">+</span>
@@ -196,19 +196,6 @@
     </div>
   </div>
 </section>
-
-<!-- Gallery Image Modal -->
-<div class="gallery-modal" *ngIf="gallerySelectedImage">
-  <div class="gallery-modal-backdrop" (click)="closeGalleryModal()"></div>
-  <div class="gallery-modal-box">
-    <button class="gallery-modal-close" (click)="closeGalleryModal()" aria-label="Close image">✕</button>
-    <div class="gallery-modal-content">
-      <div class="gallery-modal-image-wrap">
-        <img [src]="gallerySelectedImage" alt="Gallery" />
-      </div>
-    </div>
-  </div>
-</div>
 
 <section id="highlights" class="section highlights">
   <div class="container">

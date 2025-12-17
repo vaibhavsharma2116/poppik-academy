@@ -13,6 +13,7 @@ import { AdminService } from '../../services/admin.service';
 })
 export class GalleryComponent implements OnInit {
   images: any[] = [];
+  defaultImage = 'https://via.placeholder.com/420x320?text=No+Image';
   categories: string[] = [];
   showModal = false;
   isEditMode = false;
@@ -32,33 +33,15 @@ export class GalleryComponent implements OnInit {
     this.loadGallery();
   }
 
-  /**
-   * Normalize an image path into a usable URL for the <img> src.
-   * - If the path is empty, return a placeholder asset.
-   * - If it's already an absolute URL (http, https, //) return as-is.
-   * - If it begins with `/` (server upload path), prefix with current origin.
-   */
-  resolveImage(imagePath: string | null | undefined): string {
-    const placeholder = 'assets/placeholder.png';
-    if (!imagePath) return placeholder;
-    const trimmed = (imagePath || '').trim();
-    if (!trimmed) return placeholder;
-    const lowered = trimmed.toLowerCase();
-    if (lowered.startsWith('http://') || lowered.startsWith('https://') || lowered.startsWith('//')) {
-      return trimmed;
-    }
-    if (trimmed.startsWith('/')) {
-      const origin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : '';
-      return origin + trimmed;
-    }
-    return trimmed;
-  }
-
   loadGallery() {
     this.adminService.getGallery().subscribe({
       next: (response) => {
         if (response.success) {
-          this.images = response.data;
+          // normalize image URLs so the template can always use a valid src
+          this.images = (response.data || []).map((it: any) => ({
+            ...it,
+            image: this.normalizeImageUrl(it.image)
+          }));
           // build unique category list from images
           const cats = this.images.map(i => (i.category || 'General').trim()).filter(Boolean);
           this.categories = Array.from(new Set(cats));
@@ -66,6 +49,34 @@ export class GalleryComponent implements OnInit {
       },
       error: (error) => console.error('Error loading gallery:', error)
     });
+  }
+
+  normalizeImageUrl(url: string | null | undefined): string {
+    const defaultImg = this.defaultImage;
+    if (!url) return defaultImg;
+    const trimmed = (url || '').trim();
+    if (!trimmed) return defaultImg;
+    if (/^https?:\/\//i.test(trimmed) || /^\/\//.test(trimmed)) return trimmed;
+    // if the stored value already contains 'uploads' path, ensure it becomes an absolute URL to the PHP server
+    const host = window.location.hostname || 'localhost';
+    const port = '8000';
+    const base = `${window.location.protocol}//${host}:${port}`;
+    // remove any leading slashes
+    const path = trimmed.replace(/^\/+/, '');
+    // If path already looks like 'php-admin/uploads/...' or 'uploads/...', prefer to use it directly
+    if (path.indexOf('uploads') !== -1 || path.indexOf('php-admin') !== -1) {
+      return `${base}/${path}`;
+    }
+    // Fall back to assuming images are in php-admin/uploads/gallery/
+    return `${base}/uploads/gallery/${path}`;
+  }
+
+  handleImageError(event: any) {
+    try {
+      (event.target as HTMLImageElement).src = this.defaultImage;
+    } catch (e) {
+      // ignore
+    }
   }
 
   openAddModal() {
@@ -118,6 +129,12 @@ export class GalleryComponent implements OnInit {
     if (this.selectedFile) {
       const fd = new FormData();
       fd.append('image_file', this.selectedFile, this.selectedFile.name);
+      // Ask the PHP upload endpoint to create the DB record immediately
+      fd.append('create_record', '1');
+      fd.append('title', this.currentImage.title || '');
+      fd.append('category', this.currentImage.category || 'General');
+      fd.append('sort_order', String(this.currentImage.sort_order || 0));
+      fd.append('status', this.currentImage.status || 'Active');
       this.adminService.uploadGalleryFile(fd).subscribe((resp: any) => {
         if (resp && resp.url) {
           finalizeSave(resp.url);

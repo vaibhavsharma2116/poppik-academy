@@ -83,13 +83,6 @@
             <textarea class="textarea-lg" placeholder="Brief description about the course" [(ngModel)]="form.description"></textarea>
           </div>
 
-          <div class="form-field">
-            <label>Image</label>
-            <input type="file" (change)="onFileChange($event)" accept="image/*" />
-            <div *ngIf="form.image" class="preview">
-              <img [src]="form.image" alt="preview" />
-            </div>
-          </div>
         </div>
 
         <div class="form-footer">

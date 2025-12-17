@@ -22,6 +22,7 @@
           <tr>
             <th>ID</th>
             <th>Title</th>
+            <th>Excerpt</th>
             <th>Author</th>
             <th>Category</th>
             <th>Date</th>
@@ -34,6 +35,7 @@
             <tr>
               <td>{{ blog.id }}</td>
               <td>{{ blog.title }}</td>
+              <td class="excerpt">{{ blog.excerpt || (blog.content ? (blog.content | slice:0:80) + '...' : '-') }}</td>
               <td>{{ blog.author || '-' }}</td>
               <td>{{ blog.category }}</td>
               <td>{{ blog.created_at | date:'MMM d, y' }}</td>

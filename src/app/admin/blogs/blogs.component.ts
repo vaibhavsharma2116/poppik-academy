@@ -1,6 +1,5 @@
 
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
@@ -29,7 +28,7 @@ export class BlogsComponent implements OnInit {
   };
   selectedFile: File | null = null;
 
-  constructor(private adminService: AdminService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit() {
     this.loadBlogs();
@@ -83,22 +82,32 @@ export class BlogsComponent implements OnInit {
   saveBlog() {
     const finalizeSave = () => {
       if (this.editMode) {
+        console.log('[Blogs] Updating blog', this.currentBlog);
         this.adminService.updateBlog(this.currentBlog.id, this.currentBlog).subscribe({
-          next: () => {
+          next: (resp) => {
+            console.log('[Blogs] Update response', resp);
             this.loadBlogs();
             this.closeModal();
             this.selectedFile = null;
           },
-          error: (error) => console.error('Error updating blog:', error)
+          error: (error) => {
+            console.error('Error updating blog:', error);
+            alert('Error updating blog. Check console/network for details.');
+          }
         });
       } else {
+        console.log('[Blogs] Adding blog', this.currentBlog);
         this.adminService.addBlog(this.currentBlog).subscribe({
-          next: () => {
+          next: (resp) => {
+            console.log('[Blogs] Add response', resp);
             this.loadBlogs();
             this.closeModal();
             this.selectedFile = null;
           },
-          error: (error) => console.error('Error adding blog:', error)
+          error: (error) => {
+            console.error('Error adding blog:', error);
+            alert('Error adding blog. Check console/network for details.');
+          }
         });
       }
     };
@@ -109,10 +118,19 @@ export class BlogsComponent implements OnInit {
       // reuse gallery upload endpoint to store file and get URL
       this.adminService.uploadGalleryFile(fd).subscribe({
         next: (resp: any) => {
-          if (resp && resp.url) this.currentBlog.image = resp.url;
+          console.log('[Blogs] uploadGalleryFile response', resp);
+          if (resp && resp.url) {
+            this.currentBlog.image = resp.url;
+          } else {
+            console.warn('[Blogs] uploadGalleryFile did not return url', resp);
+          }
           finalizeSave();
         },
-        error: () => finalizeSave()
+        error: (err) => {
+          console.error('[Blogs] uploadGalleryFile error', err);
+          alert('Image upload failed — blog will still be saved without image.');
+          finalizeSave();
+        }
       });
     } else {
       finalizeSave();
@@ -129,9 +147,7 @@ export class BlogsComponent implements OnInit {
   }
 
   execCommand(command: string, value?: string) {
-    if (isPlatformBrowser(this.platformId)) {
-      document.execCommand(command, false, value || '');
-    }
+    document.execCommand(command, false, value || '');
   }
 
   onEditorBlur(event: any) {

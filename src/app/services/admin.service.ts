@@ -1,7 +1,6 @@
 
-import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,35 +9,13 @@ import { Observable } from 'rxjs';
 export class AdminService {
   // Build an absolute backend base so the app can call PHP directly without relying on dev-server proxy.
   // Default to same host as the browser but port 8000 (where the PHP built-in server usually runs in this project).
-  private backendHost: string;
+  private backendHost = window.location.hostname || 'localhost';
   private backendPort = '8000';
   // For the PHP built-in server (running with document root = php-admin) the API is at '/api/*'.
   // Use the server root as base and let endpoints append '/api/...'.
-  private apiUrl: string;
+  private apiUrl = `${window.location.protocol}//${this.backendHost}:${this.backendPort}`;
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
-    this.backendHost = isPlatformBrowser(this.platformId) ? (window.location.hostname || 'localhost') : 'localhost';
-    const protocol = isPlatformBrowser(this.platformId) ? window.location.protocol : 'http:';
-
-    // When developing with `ng serve --proxy-config proxy.conf.json` the dev
-    // server listens on port 5000 and proxies `/api/*` to the backend. In
-    // that case use a relative base (`''`) so requests go through the dev
-    // server proxy. Otherwise fall back to an explicit backend host:port
-    // (defaulting to :8000) which is useful when running the Node/PHP
-    // backend directly.
-    let useProxy = false;
-    if (isPlatformBrowser(this.platformId)) {
-      try {
-        const port = (window.location.port || '').toString();
-        // If running on the dev server default port (5000) prefer proxy.
-        if (port === '5000') useProxy = true;
-      } catch (e) {
-        useProxy = false;
-      }
-    }
-
-    this.apiUrl = useProxy ? '' : `${protocol}//${this.backendHost}:${this.backendPort}`;
-  }
+  constructor(private http: HttpClient) {}
 
   // Authentication
   login(email: string, password: string): Observable<any> {

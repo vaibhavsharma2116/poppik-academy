@@ -1,0 +1,77 @@
+ADMIN LOGIN AND PASSWORD CHANGE SETUP GUIDE
+===========================================
+
+STEP 1: Create the admins table
+-------------------------------
+Run the SQL file to create the admins table:
+  mysql -u root -p poppik_academy < ../sql/create_admin_table.sql
+
+Or if you're in the php-admin directory:
+  mysql -u root -p poppik_academy < sql/create_admin_table.sql
+
+
+STEP 2: Create an admin account
+-------------------------------
+Run the PHP script to create a default admin account:
+  php create_admin.php
+
+This will create:
+  Email: admin@poppik.com
+  Password: admin123
+
+
+STEP 3: Login
+-------------------------------
+1. Navigate to: http://localhost:5000/admin/login
+2. Enter email: admin@poppik.com
+3. Enter password: admin123
+4. Click Login
+
+You should see console logs in your browser showing the login process.
+
+
+STEP 4: Change Password
+-------------------------------
+1. After successful login, you'll be redirected to the dashboard
+2. Look for "Change Password" option in your admin menu/settings
+3. Enter:
+   - Current Password: admin123
+   - New Password: (your new password)
+   - Confirm New Password: (repeat)
+4. Click "Change Password"
+
+The request should now succeed because admin_id will be stored in localStorage
+and automatically sent with all API requests via the HTTP interceptor.
+
+
+TROUBLESHOOTING
+-------------------------------
+
+If you see "Not authenticated" error:
+1. Open browser DevTools (F12)
+2. Check Console tab for any error messages
+3. Check Network tab to see if admin_id is being sent in the request URL
+4. Check Application > LocalStorage to see if 'adminId' is stored
+5. Make sure you're logged in first (check if you were redirected to dashboard)
+
+If login fails:
+1. Verify the admin account exists in database:
+   mysql -u root -p poppik_academy
+   SELECT * FROM admins;
+
+2. If it doesn't exist, run: php create_admin.php
+
+3. Check browser DevTools Console for login error messages
+
+
+DEBUG ENDPOINTS
+-------------------------------
+
+Check your authentication status:
+  http://localhost:8000/api/auth-check.php?admin_id=YOUR_ADMIN_ID
+
+This will show:
+- Session variables
+- Query parameters
+- Headers
+- Timestamp

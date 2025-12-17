@@ -201,16 +201,3 @@
 .admin-layout.collapsed .main-content {
   margin-left: 60px;
 }
-
-/* Make the main content area vertically scrollable while keeping header sticky */
-.main-content {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Target everything inside main-content except the header so the page body scrolls */
-.main-content > :not(.admin-header) {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
